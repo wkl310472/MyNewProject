@@ -15,11 +15,11 @@ namespace MyNewProject.Models
         [Required]
         [MaxLength(255)]
         public string Name { get; set; }
-        public virtual ICollection<Game> Games { get; set; }
+        public virtual ICollection<GamePlatform> Games { get; set; }
 
         public Platform()
         {
-            Games = new Collection<Game>();
+            Games = new Collection<GamePlatform>();
         }
     }
 }

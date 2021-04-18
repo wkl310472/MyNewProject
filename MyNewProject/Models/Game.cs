@@ -23,13 +23,13 @@ namespace MyNewProject.Models
         [Required]
         public DateTime Release { get; set; }
 
-        public virtual ICollection<Genre> Genres { get; set; }
-        public virtual ICollection<Platform> Platforms { get; set; }
+        public virtual ICollection<GameGenre> Genres { get; set; }
+        public virtual ICollection<GamePlatform> Platforms { get; set; }
 
         public Game()
         {
-            Genres = new Collection<Genre>();
-            Platforms = new Collection<Platform>();
+            Genres = new Collection<GameGenre>();
+            Platforms = new Collection<GamePlatform>();
         }
     }
 }

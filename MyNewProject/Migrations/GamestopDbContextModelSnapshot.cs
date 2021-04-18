@@ -15,39 +15,9 @@ namespace MyNewProject.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasAnnotation("ProductVersion", "3.1.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("GameGenre", b =>
-                {
-                    b.Property<int>("GamesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GenresId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GamesId", "GenresId");
-
-                    b.HasIndex("GenresId");
-
-                    b.ToTable("GameGenre");
-                });
-
-            modelBuilder.Entity("GamePlatform", b =>
-                {
-                    b.Property<int>("GamesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PlatformsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GamesId", "PlatformsId");
-
-                    b.HasIndex("PlatformsId");
-
-                    b.ToTable("GamePlatform");
-                });
 
             modelBuilder.Entity("MyNewProject.Models.Game", b =>
                 {
@@ -58,13 +28,13 @@ namespace MyNewProject.Migrations
 
                     b.Property<string>("Developer")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime>("Release")
                         .HasColumnType("datetime2");
@@ -72,6 +42,36 @@ namespace MyNewProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Games");
+                });
+
+            modelBuilder.Entity("MyNewProject.Models.GameGenre", b =>
+                {
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GameId", "GenreId");
+
+                    b.HasIndex("GenreId");
+
+                    b.ToTable("GameGenres");
+                });
+
+            modelBuilder.Entity("MyNewProject.Models.GamePlatform", b =>
+                {
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlatformId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GameId", "PlatformId");
+
+                    b.HasIndex("PlatformId");
+
+                    b.ToTable("GamePlatforms");
                 });
 
             modelBuilder.Entity("MyNewProject.Models.Genre", b =>
@@ -83,8 +83,8 @@ namespace MyNewProject.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
@@ -100,40 +100,40 @@ namespace MyNewProject.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
 
                     b.HasKey("Id");
 
                     b.ToTable("Platforms");
                 });
 
-            modelBuilder.Entity("GameGenre", b =>
+            modelBuilder.Entity("MyNewProject.Models.GameGenre", b =>
                 {
-                    b.HasOne("MyNewProject.Models.Game", null)
-                        .WithMany()
-                        .HasForeignKey("GamesId")
+                    b.HasOne("MyNewProject.Models.Game", "Game")
+                        .WithMany("Genres")
+                        .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MyNewProject.Models.Genre", null)
-                        .WithMany()
-                        .HasForeignKey("GenresId")
+                    b.HasOne("MyNewProject.Models.Genre", "Genre")
+                        .WithMany("Games")
+                        .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("GamePlatform", b =>
+            modelBuilder.Entity("MyNewProject.Models.GamePlatform", b =>
                 {
-                    b.HasOne("MyNewProject.Models.Game", null)
-                        .WithMany()
-                        .HasForeignKey("GamesId")
+                    b.HasOne("MyNewProject.Models.Game", "Game")
+                        .WithMany("Platforms")
+                        .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MyNewProject.Models.Platform", null)
-                        .WithMany()
-                        .HasForeignKey("PlatformsId")
+                    b.HasOne("MyNewProject.Models.Platform", "Platform")
+                        .WithMany("Games")
+                        .HasForeignKey("PlatformId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

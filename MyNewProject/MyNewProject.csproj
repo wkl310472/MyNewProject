@@ -13,6 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.13">
       <PrivateAssets>all</PrivateAssets>
@@ -31,6 +33,13 @@
     <Content Remove="$(SpaRoot)**" />
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20210418132929_restructureManyToManyRelationships.cs" />
+    <Compile Remove="Migrations\20210418132929_restructureManyToManyRelationships.Designer.cs" />
+    <Compile Remove="Migrations\20210418133426_reconstructureManyToManyRelationships.cs" />
+    <Compile Remove="Migrations\20210418133426_reconstructureManyToManyRelationships.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

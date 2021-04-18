@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,23 +17,27 @@ namespace MyNewProject.Controllers.API
     public class GamesController : ControllerBase
     {
         private readonly GamestopDbContext context;
-        public GamesController(GamestopDbContext context)
+        private readonly IMapper mapper;
+
+        public GamesController(GamestopDbContext context, IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
 
         // GET: api/<GamesController>
         [HttpGet]
-        public IEnumerable<Game> Get()
+        public IEnumerable<GameResource> Get()
         {
-            return this.context.Games.ToList();
+            var games = context.Games.Include(g => g.Genres).ToList();
+            return mapper.Map<List<Game>,List<GameResource>>(games);
         }
 
         // GET api/<GamesController>/5
         [HttpGet("{id}")]
         public Game Get(int id)
         {
-            return this.context.Games.SingleOrDefault(g => g.Id==id);
+            return this.context.Games.Include(g => g.Genres).SingleOrDefault(g => g.Id==id);
         }
 
         // POST api/<GamesController>
