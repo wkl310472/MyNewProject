@@ -27,27 +27,29 @@ namespace MyNewProject.Controllers.API
 
         // GET: api/<GamesController>
         [HttpGet]
-        public IEnumerable<GameResource> Get()
+        public async Task<IActionResult> Get()
         {
-            var games = context.Games.Include(g => g.Genres).ToList();
-            return mapper.Map<List<Game>,List<GameResource>>(games);
+            var games = await context.Games.Include(g => g.Genres).ToListAsync();
+            var result = mapper.Map<List<Game>, List<GameResource>>(games);
+            return Ok(result);
         }
 
         // GET api/<GamesController>/5
         [HttpGet("{id}")]
-        public GameResource Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            var game = this.context.Games.Include(g => g.Genres).SingleOrDefault(g => g.Id==id);
-            return mapper.Map<Game, GameResource>(game);
+            var game = await this.context.Games.FindAsync(id);
+            var result = mapper.Map<Game, GameResource>(game);
+            return Ok(result);
         }
 
         // POST api/<GamesController>
         [HttpPost]
-        public IActionResult Post([FromBody] GameResource gameResource)
+        public async Task<IActionResult> Post([FromBody] GameResource gameResource)
         {
             var game = mapper.Map<GameResource, Game>(gameResource);
             this.context.Games.Add(game);
-            this.context.SaveChanges();
+            await this.context.SaveChangesAsync();
 
             var result = mapper.Map<Game, GameResource>(game);
 
@@ -56,13 +58,17 @@ namespace MyNewProject.Controllers.API
 
         // PUT api/<GamesController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] GameResource gameResource)
+        public async Task<IActionResult> Put(int id, [FromBody] GameResource gameResource)
         {
-            var gameInDb = this.context.Games.SingleOrDefault(g => g.Id == id);
+            var gameInDb = await this.context.Games.FindAsync(id);
 
-            gameInDb = mapper.Map<GameResource, Game>(gameResource);
+            mapper.Map<GameResource, Game>(gameResource,gameInDb);
 
-            this.context.SaveChanges();
+            await this.context.SaveChangesAsync();
+
+            var result = mapper.Map<Game, GameResource>(gameInDb);
+
+            return Ok(result);
         }
 
         // DELETE api/<GamesController>/5
@@ -72,7 +78,7 @@ namespace MyNewProject.Controllers.API
             var gameInDb = await this.context.Games.FindAsync(id);
 
             this.context.Games.Remove(gameInDb);
-            this.context.SaveChanges();
+            await this.context.SaveChangesAsync();
 
             return Ok(id);
         }
