@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GenreService } from '../../services/genre.service';
+import { GameService } from '../../services/game.service';
 
 @Component({
   selector: 'app-game',
@@ -7,14 +7,14 @@ import { GenreService } from '../../services/genre.service';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
-  genres: any[];
-  platforms: any[];
+  games: object[];
 
-  constructor(private service: GenreService) { }
+  constructor(private service: GameService) {
+
+  }
 
   ngOnInit() {
-
-    this.service.getAll().subscribe(genres => this.genres = Object.values(genres));
+    this.service.getAll().subscribe(games => this.games = Object.values(games));
   }
 
 }

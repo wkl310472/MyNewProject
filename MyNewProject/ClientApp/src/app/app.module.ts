@@ -14,6 +14,7 @@ import { GameComponent } from './components/game/game.component';
 import { GameService } from './services/game.service';
 import { GenreService } from './services/genre.service';
 import { PlatformService } from './services/platform.service';
+import { NewGameComponent } from './components/new-game/new-game.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { PlatformService } from './services/platform.service';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    GameComponent
+    GameComponent,
+    NewGameComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
