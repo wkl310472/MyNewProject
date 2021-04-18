@@ -35,42 +35,46 @@ namespace MyNewProject.Controllers.API
 
         // GET api/<GamesController>/5
         [HttpGet("{id}")]
-        public Game Get(int id)
+        public GameResource Get(int id)
         {
-            return this.context.Games.Include(g => g.Genres).SingleOrDefault(g => g.Id==id);
+            var game = this.context.Games.Include(g => g.Genres).SingleOrDefault(g => g.Id==id);
+            return mapper.Map<Game, GameResource>(game);
         }
 
         // POST api/<GamesController>
         [HttpPost]
-        public Game Post([FromBody] Game game)
+        public IActionResult Post([FromBody] GameResource gameResource)
         {
+            var game = mapper.Map<GameResource, Game>(gameResource);
             this.context.Games.Add(game);
             this.context.SaveChanges();
 
-            return game;
+            var result = mapper.Map<Game, GameResource>(game);
+
+            return Ok(result);
         }
 
         // PUT api/<GamesController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Game game)
+        public void Put(int id, [FromBody] GameResource gameResource)
         {
             var gameInDb = this.context.Games.SingleOrDefault(g => g.Id == id);
 
-            gameInDb.Name = game.Name;
-            gameInDb.Developer = game.Developer;
-            gameInDb.Release = game.Release;
+            gameInDb = mapper.Map<GameResource, Game>(gameResource);
 
             this.context.SaveChanges();
         }
 
         // DELETE api/<GamesController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var gameInDb = this.context.Games.SingleOrDefault(g => g.Id == id);
+            var gameInDb = await this.context.Games.FindAsync(id);
 
             this.context.Games.Remove(gameInDb);
             this.context.SaveChanges();
+
+            return Ok(id);
         }
     }
 }
