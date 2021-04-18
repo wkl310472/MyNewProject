@@ -11,6 +11,10 @@ import { CounterComponent } from './components/counter/counter.component';
 import { FetchDataComponent } from './components/fetch-data/fetch-data.component';
 import { GameComponent } from './components/game/game.component';
 
+import { GameService } from './services/game.service';
+import { GenreService } from './services/genre.service';
+import { PlatformService } from './services/platform.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +35,7 @@ import { GameComponent } from './components/game/game.component';
       { path: 'game', component: GameComponent}
     ])
   ],
-  providers: [],
+  providers: [GameService, GenreService, PlatformService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
