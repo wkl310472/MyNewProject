@@ -21,7 +21,7 @@ namespace MyNewProject.Models
         public string Developer { get; set; }
 
         [Required]
-        public DateTime Release { get; set; }
+        public DateTime? Release { get; set; }
 
         public virtual ICollection<GameGenre> Genres { get; set; }
         public virtual ICollection<GamePlatform> Platforms { get; set; }

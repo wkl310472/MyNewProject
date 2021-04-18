@@ -40,6 +40,8 @@
     <Compile Remove="Migrations\20210418132929_restructureManyToManyRelationships.Designer.cs" />
     <Compile Remove="Migrations\20210418133426_reconstructureManyToManyRelationships.cs" />
     <Compile Remove="Migrations\20210418133426_reconstructureManyToManyRelationships.Designer.cs" />
+    <Compile Remove="Migrations\20210418190953_setGameClassPropertyReleaseToNullable.cs" />
+    <Compile Remove="Migrations\20210418190953_setGameClassPropertyReleaseToNullable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

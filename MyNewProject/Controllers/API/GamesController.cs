@@ -29,7 +29,7 @@ namespace MyNewProject.Controllers.API
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var games = await context.Games.Include(g => g.Genres).ToListAsync();
+            var games = await context.Games.Include(g => g.Genres).Include(g => g.Platforms).ToListAsync();
             var result = mapper.Map<List<Game>, List<GameResource>>(games);
             return Ok(result);
         }
@@ -38,7 +38,11 @@ namespace MyNewProject.Controllers.API
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var game = await this.context.Games.FindAsync(id);
+            var game = await this.context.Games.Include(g => g.Genres).Include(g => g.Platforms).SingleOrDefaultAsync(g => g.Id == id);
+            if (game == null)
+            {
+                return NotFound();
+            }
             var result = mapper.Map<Game, GameResource>(game);
             return Ok(result);
         }
@@ -47,6 +51,10 @@ namespace MyNewProject.Controllers.API
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] GameResource gameResource)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var game = mapper.Map<GameResource, Game>(gameResource);
             this.context.Games.Add(game);
             await this.context.SaveChangesAsync();
@@ -62,6 +70,15 @@ namespace MyNewProject.Controllers.API
         {
             var gameInDb = await this.context.Games.FindAsync(id);
 
+            if (gameInDb == null)
+            {
+                return NotFound();
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             mapper.Map<GameResource, Game>(gameResource,gameInDb);
 
             await this.context.SaveChangesAsync();
@@ -76,11 +93,15 @@ namespace MyNewProject.Controllers.API
         public async Task<IActionResult> Delete(int id)
         {
             var gameInDb = await this.context.Games.FindAsync(id);
+            if (gameInDb == null)
+            {
+                return NotFound();
+            }
 
             this.context.Games.Remove(gameInDb);
             await this.context.SaveChangesAsync();
 
-            return Ok(id);
+            return Ok(gameInDb);
         }
     }
 }
