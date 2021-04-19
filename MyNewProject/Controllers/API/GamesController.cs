@@ -68,7 +68,7 @@ namespace MyNewProject.Controllers.API
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] GameResource gameResource)
         {
-            var gameInDb = await this.context.Games.FindAsync(id);
+            var gameInDb = await this.context.Games.Include(g => g.Genres).Include(g => g.Platforms).SingleOrDefaultAsync(g => g.Id == id);
 
             if (gameInDb == null)
             {
