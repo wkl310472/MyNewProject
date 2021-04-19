@@ -14,7 +14,7 @@ import { GameComponent } from './components/game/game.component';
 import { GameService } from './services/game.service';
 import { GenreService } from './services/genre.service';
 import { PlatformService } from './services/platform.service';
-import { NewGameComponent } from './components/new-game/new-game.component';
+import { EditGameComponent } from './components/edit-game/edit-game.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,7 @@ import { NewGameComponent } from './components/new-game/new-game.component';
     CounterComponent,
     FetchDataComponent,
     GameComponent,
-    NewGameComponent
+    EditGameComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -34,7 +34,8 @@ import { NewGameComponent } from './components/new-game/new-game.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'game', component: GameComponent}
+      { path: 'games', component: GameComponent },
+      { path: 'games/edit/:id', component: EditGameComponent }
     ])
   ],
   providers: [GameService, GenreService, PlatformService],
