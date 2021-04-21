@@ -1,1 +1,18 @@
-<p>edit-game works!</p>
+
+<form>
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input id="name" class="form-control" value="{{game.name}}"/>
+  </div>
+  <div class="form-group">
+    <label for="name">Developer</label>
+    <input id="name" class="form-control" value="{{game.developer}}"/>
+  </div>
+  <div class="form-group">
+    <label for="name">Release</label>
+    <input id="name" class="form-control" value="{{game.release | date}}"/>
+  </div>
+</form>
+
+
+<button class="btn btn-primary" (click)="navigateBack()">Back</button>

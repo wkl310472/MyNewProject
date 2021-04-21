@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { throwError } from 'rxjs';
 
 
 @Injectable({
@@ -17,6 +18,9 @@ export class DataService {
     return this.http.get(this.url, { observe: 'body', responseType: 'json' });
   }
 
+  get(id: any) {
+    return this.http.get(this.url + '/' + id, { observe: 'body', responseType: 'json' });
+  }
 
 
 }
