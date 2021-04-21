@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyNewProject.Models;
+using MyNewProject.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MyNewProject.Persistence;
+using MyNewProject.Core;
+using AutoMapper;
+using MyNewProject.Controllers.Resources;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,52 +16,98 @@ namespace MyNewProject.Controllers.API
     [ApiController]
     public class GenresController : ControllerBase
     {
-        private readonly GamestopDbContext context;
+        private readonly IUnitOfWork unitOfWork;
+        private readonly IRepository<Genre> genreRepository;
+        private readonly IMapper mapper;
 
-        public GenresController(GamestopDbContext context)
+        public GenresController(IUnitOfWork unitOfWork, IMapper mapper, IRepository<Genre> genreRepository)
         {
-            this.context = context;
+            this.unitOfWork = unitOfWork;
+            this.mapper = mapper;
+            this.genreRepository = genreRepository;
         }
 
         // GET: api/<GenresController>
         [HttpGet]
-        public IEnumerable<Genre> Get()
+        public async Task<IActionResult> Get()
         {
-            return this.context.Genres.ToList();
+            var genres = await genreRepository.Get(includeRelated: false);
+            var result = mapper.Map<List<Genre>, List<KeyValuePairResource>>(genres);
+            return Ok(result);
         }
 
         // GET api/<GenresController>/5
         [HttpGet("{id}")]
-        public Genre Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return this.context.Genres.SingleOrDefault(g => g.Id == id);
+            var genre = await genreRepository.Get(id, includeRelated: false);
+            if (genre == null)
+            {
+                return NotFound();
+            }
+            var result = mapper.Map<Genre, KeyValuePairResource>(genre);
+            return Ok(result);
         }
 
         // POST api/<GenresController>
         [HttpPost]
-        public Genre Post([FromBody] Genre genre)
+        public async Task<IActionResult> Post([FromBody] KeyValuePairResource genreResource)
         {
-            this.context.Genres.Add(genre);
-            this.context.SaveChanges();
-            return genre;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var genre = mapper.Map<KeyValuePairResource, Genre>(genreResource);
+            genreRepository.Add(genre);
+            await unitOfWork.CompleteAsync();
+
+            genre = await genreRepository.Get(genre.Id, includeRelated: false);
+
+            var result = mapper.Map<Genre, KeyValuePairResource>(genre);
+
+            return Ok(result);
         }
 
         // PUT api/<GenresController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Genre genre)
+        public async Task<IActionResult> Put(int id, [FromBody] KeyValuePairResource genreResource)
         {
-            var genreInDb = this.context.Genres.SingleOrDefault(g => g.Id == id);
-            genreInDb.Name = genre.Name;
-            this.context.SaveChanges();
+            var genreInDb = await genreRepository.Get(id, includeRelated: false);
+
+            if (genreInDb == null)
+            {
+                return NotFound();
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            mapper.Map(genreResource, genreInDb);
+
+            await unitOfWork.CompleteAsync();
+
+            await genreRepository.Get(genreInDb.Id, includeRelated: false);
+
+            var result = mapper.Map<Genre, KeyValuePairResource>(genreInDb);
+
+            return Ok(result);
         }
 
         // DELETE api/<GenresController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var genreInDb = this.context.Genres.SingleOrDefault(g => g.Id == id);
-            this.context.Genres.Remove(genreInDb);
-            this.context.SaveChanges();
+            var genreInDb = await genreRepository.Get(id, includeRelated: false);
+            if (genreInDb == null)
+            {
+                return NotFound();
+            }
+
+            genreRepository.Remove(genreInDb);
+            await unitOfWork.CompleteAsync();
+
+            return Ok(genreInDb);
         }
     }
 }

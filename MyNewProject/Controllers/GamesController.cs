@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyNewProject.Models;
+using MyNewProject.Core.Models;
+using MyNewProject.Core;
 using MyNewProject.Controllers.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using MyNewProject.Persistence;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,9 +18,9 @@ namespace MyNewProject.Controllers.API
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
-        private readonly IGameRepository gameRepository;
+        private readonly IRepository<Game> gameRepository;
 
-        public GamesController(IUnitOfWork unitOfWork, IMapper mapper, IGameRepository gameRepository)
+        public GamesController(IUnitOfWork unitOfWork, IMapper mapper, IRepository<Game> gameRepository)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
@@ -86,7 +85,7 @@ namespace MyNewProject.Controllers.API
                 return BadRequest(ModelState);
             }
 
-            mapper.Map<SaveGameResource, Game>(saveGameResource, gameInDb);
+            mapper.Map(saveGameResource, gameInDb);
 
             await unitOfWork.CompleteAsync();
 

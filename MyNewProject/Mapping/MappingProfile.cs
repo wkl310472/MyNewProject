@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using MyNewProject.Models;
+using MyNewProject.Core.Models;
 using MyNewProject.Controllers.Resources;
 
 namespace MyNewProject.Mapping
@@ -19,9 +19,7 @@ namespace MyNewProject.Mapping
             CreateMap<Game, GameResource>()
                 .ForMember(gr => gr.Genres, opt => opt.MapFrom(g => g.Genres.Select(ge => new KeyValuePairResource { Id = ge.Genre.Id, Name = ge.Genre.Name })))
                 .ForMember(gr => gr.Platforms, opt => opt.MapFrom(g => g.Platforms.Select(p => new KeyValuePairResource { Id = p.Platform.Id, Name = p.Platform.Name })));
-            CreateMap<Genre, GenreResource>();
             CreateMap<Genre, KeyValuePairResource>();
-            CreateMap<Platform, PlatformResource>();
             CreateMap<Platform, KeyValuePairResource>();
 
             CreateMap<SaveGameResource, Game>()
@@ -64,8 +62,10 @@ namespace MyNewProject.Mapping
                         g.Platforms.Add(item);
                     }
                 });
-            CreateMap<GenreResource, Genre>();
-            CreateMap<PlatformResource, Platform>();
+            CreateMap<KeyValuePairResource, Genre>()
+                .ForMember(g => g.Id, opt => opt.Ignore());
+            CreateMap<KeyValuePairResource, Platform>()
+                .ForMember(p => p.Id, opt => opt.Ignore());
 
         }
     }

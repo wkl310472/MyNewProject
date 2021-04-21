@@ -8,6 +8,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using MyNewProject.Persistence;
 using AutoMapper;
+using MyNewProject.Core;
+using MyNewProject.Core.Models;
 
 namespace MyNewProject
 {
@@ -27,7 +29,8 @@ namespace MyNewProject
             // In production, the Angular files will be served from this directory
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddScoped<IGameRepository, GameRepository>();
+            services.AddScoped<IRepository<Game>, GameRepository>();
+            services.AddScoped<IRepository<Genre>, GenreRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyNewProject.Models;
+using MyNewProject.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
