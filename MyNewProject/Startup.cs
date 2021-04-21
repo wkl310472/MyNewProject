@@ -27,6 +27,9 @@ namespace MyNewProject
             // In production, the Angular files will be served from this directory
             services.AddAutoMapper(typeof(Startup));
 
+            services.AddScoped<IGameRepository, GameRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 
             services.AddDbContext<GamestopDbContext>(options =>
             {
