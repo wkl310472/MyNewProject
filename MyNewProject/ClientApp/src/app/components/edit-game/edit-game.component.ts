@@ -45,5 +45,24 @@ export class EditGameComponent implements OnInit {
     this.router.navigate(['/games']);
   }
 
+  onGenresChange(event,genreId: number) {
+    if (event.target.checked) {
+      this.genreIds.push(genreId);
+    }
+    else {
+      const index = this.genreIds.indexOf(genreId);
+      this.genreIds.splice(index, 1);
+    }
+  }
+
+  onPlatformsChange(event, platformId: number) {
+    if (event.target.checked) {
+      this.platformIds.push(platformId);
+    }
+    else {
+      const index = this.platformIds.indexOf(platformId);
+      this.platformIds.splice(index, 1);
+    }
+  }
 
 }
