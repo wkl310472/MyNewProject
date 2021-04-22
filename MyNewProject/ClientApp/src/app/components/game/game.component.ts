@@ -7,14 +7,14 @@ import { GameService } from '../../services/game.service';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
-  games: object[];
+  games;
 
   constructor(private service: GameService) {
 
   }
 
   ngOnInit() {
-    this.service.getAll().subscribe(games => this.games = Object.values(games));
+    this.service.getAllGames().subscribe(games => this.games = games);
   }
 
 }

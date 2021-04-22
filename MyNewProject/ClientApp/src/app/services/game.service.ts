@@ -1,14 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GameService extends DataService {
+export class GameService{
 
-  constructor(http: HttpClient) {
-    super(http);
-    this.url = "https://localhost:44369/api/games";
+  constructor(private http: HttpClient) {
+
+  }
+
+  getAllGames() {
+    return this.http.get('/api/games');
+  }
+
+  getOneGame(id) {
+    return this.http.get('/api/games/'+id);
   }
 }

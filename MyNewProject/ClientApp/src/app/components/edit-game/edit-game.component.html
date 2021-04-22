@@ -1,16 +1,18 @@
 
+<h1>Edit Game</h1>
+
 <form>
   <div class="form-group">
     <label for="name">Name</label>
     <input id="name" class="form-control" value="{{game.name}}"/>
   </div>
   <div class="form-group">
-    <label for="name">Developer</label>
-    <input id="name" class="form-control" value="{{game.developer}}"/>
+    <label for="developer">Developer</label>
+    <input id="developer" class="form-control" value="{{game.developer}}"/>
   </div>
   <div class="form-group">
-    <label for="name">Release</label>
-    <input id="name" class="form-control" value="{{game.release | date}}"/>
+    <label for="release">Release</label>
+    <input id="release" class="form-control" value="{{game.release | date:'yyyy-MM-dd'}}"/>
   </div>
 </form>
 

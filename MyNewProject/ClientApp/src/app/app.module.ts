@@ -12,8 +12,6 @@ import { FetchDataComponent } from './components/fetch-data/fetch-data.component
 import { GameComponent } from './components/game/game.component';
 
 import { GameService } from './services/game.service';
-import { GenreService } from './services/genre.service';
-import { PlatformService } from './services/platform.service';
 import { EditGameComponent } from './components/edit-game/edit-game.component';
 
 @NgModule({
@@ -38,7 +36,7 @@ import { EditGameComponent } from './components/edit-game/edit-game.component';
       { path: 'games/edit/:id', component: EditGameComponent }
     ])
   ],
-  providers: [GameService, GenreService, PlatformService],
+  providers: [GameService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -9,6 +9,6 @@
   <tr *ngFor="let game of games">
     <td><a [routerLink]="['/games/edit',game.id]">{{game.name}}</a></td>
     <td>{{game.developer}}</td>
-    <td>{{game.release | date}}</td>
+    <td>{{game.release | date:'yyyy-MM-dd'}}</td>
   </tr>
 </table>
