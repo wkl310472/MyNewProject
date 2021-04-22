@@ -17,4 +17,12 @@ export class GameService{
   getOneGame(id) {
     return this.http.get('/api/games/'+id);
   }
+
+  getGenres() {
+    return this.http.get('/api/genres');
+  }
+
+  getPlatforms() {
+    return this.http.get('/api/platforms');
+  }
 }

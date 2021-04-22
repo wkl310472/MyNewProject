@@ -11,6 +11,11 @@ export class EditGameComponent implements OnInit {
 
   id: number;
   game: object;
+  genres;
+  platforms;
+  genreIds;
+  platformIds;
+
 
   constructor(private route: ActivatedRoute, private router: Router, private service: GameService) { }
 
@@ -18,8 +23,21 @@ export class EditGameComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.service.getOneGame(params.get('id')).subscribe(game => {
         this.game = game;
-      })
+        this.genreIds = game['genres'].map(item => item['id']);
+        this.platformIds = game['platforms'].map(item => item['id']);
+      });
     });
+
+    this.service.getGenres().subscribe(genres => {
+      this.genres = genres;
+    });
+
+    this.service.getPlatforms().subscribe(platforms => {
+      this.platforms = platforms;
+    });
+
+
+
   }
 
 
