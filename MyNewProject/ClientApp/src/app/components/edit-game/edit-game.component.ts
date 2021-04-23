@@ -65,4 +65,11 @@ export class EditGameComponent implements OnInit {
     }
   }
 
+  updateGame(game,id:number) {
+    this.service.updateGame(game,id).subscribe(updatedGame => {
+      console.log(updatedGame);
+    });
+
+  }
+
 }

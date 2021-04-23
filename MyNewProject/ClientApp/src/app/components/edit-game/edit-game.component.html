@@ -1,7 +1,11 @@
 
 <h1>Edit Game</h1>
 
-<form #f="ngForm">
+<form #g="ngForm">
+
+  <!--<div class="form-group">
+    <input [ngModel]="game.id" name="id" id="id" class="form-control" value="{{game.id}}" hidden />
+  </div>-->
 
   <div class="form-group">
     <label for="name">Name</label>
@@ -15,6 +19,7 @@
     <label for="release">Release</label>
     <input [ngModel]="game.release|date:'yyyy-MM-dd'" name="release" id="release" class="form-control" value="{{game.release | date:'yyyy-MM-dd'}}" />
   </div>
+
 
   <h2>Genres</h2>
   <div [ngModel]="genreIds" name="genres">
@@ -40,9 +45,11 @@
 
   <div>
     <button class="btn btn-primary" (click)="navigateBack()">Back</button>
+    <button class="btn btn-primary" (click)="updateGame(g.value,game.id)">Save</button>
   </div>
 
-  <p>{{f.value | json}}</p>
+
+  <p>{{g.value | json}}</p>
 </form>
 
 

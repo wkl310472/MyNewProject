@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -24,5 +24,12 @@ export class GameService{
 
   getPlatforms() {
     return this.http.get('/api/platforms');
+  }
+
+  updateGame(game: any,id:number) {
+    console.log(JSON.stringify(game));
+    return this.http.put('/api/games/' + id, JSON.stringify(game),
+      {
+        headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json' });
   }
 }
