@@ -13,6 +13,8 @@ import { GameComponent } from './components/game/game.component';
 
 import { GameService } from './services/game.service';
 import { EditGameComponent } from './components/edit-game/edit-game.component';
+import { NewGameComponent } from './components/new-game/new-game.component';
+import { GameInfoComponent } from './components/game-info/game-info.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { EditGameComponent } from './components/edit-game/edit-game.component';
     CounterComponent,
     FetchDataComponent,
     GameComponent,
-    EditGameComponent
+    EditGameComponent,
+    NewGameComponent,
+    GameInfoComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -33,7 +37,9 @@ import { EditGameComponent } from './components/edit-game/edit-game.component';
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'games', component: GameComponent },
-      { path: 'games/edit/:id', component: EditGameComponent }
+      { path: 'games/edit/:id', component: EditGameComponent },
+      { path: 'games/new', component: NewGameComponent },
+      { path: 'games/info/:id', component: GameInfoComponent }
     ])
   ],
   providers: [GameService],

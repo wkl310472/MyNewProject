@@ -3,10 +3,6 @@
 
 <form #g="ngForm">
 
-  <!--<div class="form-group">
-    <input [ngModel]="game.id" name="id" id="id" class="form-control" value="{{game.id}}" hidden />
-  </div>-->
-
   <div class="form-group">
     <label for="name">Name</label>
     <input [ngModel]="game.name" name="name" id="name" class="form-control" value="{{game.name}}" />
@@ -43,17 +39,16 @@
   </div>
 
 
-  <div>
-    <button class="btn btn-primary" (click)="navigateBack()">Back</button>
+  <div class="container-flex-between">
+    <button class="btn btn-primary" [routerLink]="['/games']">Back</button>
     <button class="btn btn-primary" (click)="updateGame(g.value,game.id)">Save</button>
   </div>
 
-
-  <p>{{g.value | json}}</p>
+  <!--<p>{{g.value | json}}</p>-->
 </form>
 
 
-<h2>Game</h2>
-<p>{{game | json}}</p>
+<!--<h2>Game</h2>
+<p>{{game | json}}</p>-->
 
 

@@ -14,7 +14,7 @@ export class GameService{
     return this.http.get('/api/games');
   }
 
-  getOneGame(id) {
+  getGame(id) {
     return this.http.get('/api/games/'+id);
   }
 
@@ -27,9 +27,12 @@ export class GameService{
   }
 
   updateGame(game: any,id:number) {
-    console.log(JSON.stringify(game));
     return this.http.put('/api/games/' + id, JSON.stringify(game),
-      {
-        headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json' });
+      {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json' });
+  }
+
+  createGame(game: any) {
+    return this.http.post('/api/games/', JSON.stringify(game),
+      { headers: { 'Content-Type': 'application/json' }, observe: 'body', responseType: 'json' });
   }
 }

@@ -5,6 +5,10 @@ a {
   color: #0366d6;
 }
 
+h2{
+    margin-top:2rem;
+}
+
 code {
   color: #e01a76;
 }
@@ -13,4 +17,13 @@ code {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
+}
+
+.btn{
+    margin-right:1rem;
+}
+
+.container-flex-between {
+  margin-top:2rem;
+  display: flex;
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute} from '@angular/router';
 import { GameService } from '../../services/game.service';
 
 @Component({
@@ -17,11 +17,11 @@ export class EditGameComponent implements OnInit {
   platformIds;
 
 
-  constructor(private route: ActivatedRoute, private router: Router, private service: GameService) { }
+  constructor(private route: ActivatedRoute, private service: GameService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.service.getOneGame(params.get('id')).subscribe(game => {
+      this.service.getGame(params.get('id')).subscribe(game => {
         this.game = game;
         this.genreIds = game['genres'].map(item => item['id']);
         this.platformIds = game['platforms'].map(item => item['id']);
@@ -35,14 +35,6 @@ export class EditGameComponent implements OnInit {
     this.service.getPlatforms().subscribe(platforms => {
       this.platforms = platforms;
     });
-
-
-
-  }
-
-
-  navigateBack() {
-    this.router.navigate(['/games']);
   }
 
   onGenresChange(event,genreId: number) {
@@ -69,7 +61,6 @@ export class EditGameComponent implements OnInit {
     this.service.updateGame(game,id).subscribe(updatedGame => {
       console.log(updatedGame);
     });
-
   }
 
 }
