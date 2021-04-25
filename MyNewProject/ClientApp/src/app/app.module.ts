@@ -1,8 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
@@ -30,6 +33,8 @@ import { GameInfoComponent } from './components/game-info/game-info.component';
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    BrowserAnimationsModule,
+    CommonModule,
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
@@ -40,7 +45,8 @@ import { GameInfoComponent } from './components/game-info/game-info.component';
       { path: 'games/edit/:id', component: EditGameComponent },
       { path: 'games/new', component: NewGameComponent },
       { path: 'games/info/:id', component: GameInfoComponent }
-    ])
+    ]),
+    ToastrModule.forRoot()
   ],
   providers: [GameService],
   bootstrap: [AppComponent]
