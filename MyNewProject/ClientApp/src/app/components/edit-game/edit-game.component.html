@@ -53,6 +53,7 @@
   <div class="container-flex">
     <button class="btn btn-primary" [routerLink]="['/games']">Back</button>
     <button class="btn btn-primary" (click)="updateGame(g.value,game.id)" [disabled]="!g.valid">Save</button>
+    <button class="btn btn-primary" (click)="notify()">Notify</button>
   </div>
 
   <!--<p>{{g.value | json}}</p>-->

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute} from '@angular/router';
 import { GameService } from '../../services/game.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-game',
@@ -17,7 +18,7 @@ export class EditGameComponent implements OnInit {
   platformIds;
 
 
-  constructor(private route: ActivatedRoute, private service: GameService) { }
+  constructor(private route: ActivatedRoute, private service: GameService, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -61,6 +62,11 @@ export class EditGameComponent implements OnInit {
     this.service.updateGame(game,id).subscribe(updatedGame => {
       console.log(updatedGame);
     });
+  }
+
+
+  notify() {
+    this.toastr.success('Hello world!', 'Toastr fun!');
   }
 
 }
