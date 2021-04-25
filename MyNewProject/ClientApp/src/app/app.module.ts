@@ -1,9 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
 
@@ -18,6 +18,7 @@ import { GameService } from './services/game.service';
 import { EditGameComponent } from './components/edit-game/edit-game.component';
 import { NewGameComponent } from './components/new-game/new-game.component';
 import { GameInfoComponent } from './components/game-info/game-info.component';
+import { AppErrorHandler } from './app.error-handler';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,10 @@ import { GameInfoComponent } from './components/game-info/game-info.component';
     ]),
     ToastrModule.forRoot()
   ],
-  providers: [GameService],
+  providers: [
+    { provide: ErrorHandler, useClass: AppErrorHandler },
+    GameService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

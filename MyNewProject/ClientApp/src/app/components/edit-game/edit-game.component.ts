@@ -10,13 +10,12 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class EditGameComponent implements OnInit {
 
-  id: number;
-  game: object;
+  game: any = {
+    genres: [],
+    platforms: []
+  };
   genres;
   platforms;
-  genreIds;
-  platformIds;
-
 
   constructor(private route: ActivatedRoute, private service: GameService, private toastr: ToastrService) { }
 
@@ -24,8 +23,8 @@ export class EditGameComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.service.getGame(params.get('id')).subscribe(game => {
         this.game = game;
-        this.genreIds = game['genres'].map(item => item['id']);
-        this.platformIds = game['platforms'].map(item => item['id']);
+        this.game.genres = game['genres'].map(item => item['id']);
+        this.game.platforms = game['platforms'].map(item => item['id']);
       });
     });
 
@@ -40,32 +39,31 @@ export class EditGameComponent implements OnInit {
 
   onGenresChange(event,genreId: number) {
     if (event.target.checked) {
-      this.genreIds.push(genreId);
+      this.game.genres.push(genreId);
     }
     else {
-      const index = this.genreIds.indexOf(genreId);
-      this.genreIds.splice(index, 1);
+      const index = this.game.genres.indexOf(genreId);
+      this.game.genres.splice(index, 1);
     }
   }
 
   onPlatformsChange(event, platformId: number) {
     if (event.target.checked) {
-      this.platformIds.push(platformId);
+      this.game.platforms.push(platformId);
     }
     else {
-      const index = this.platformIds.indexOf(platformId);
-      this.platformIds.splice(index, 1);
+      const index = this.game.platforms.indexOf(platformId);
+      this.game.platforms.splice(index, 1);
     }
   }
 
-  updateGame(game,id:number) {
-    this.service.updateGame(game,id).subscribe(updatedGame => {
+  updateGame(release) {
+
+    this.game.release = release;
+    this.service.updateGame(this.game,this.game.id).subscribe(updatedGame => {
       console.log(updatedGame);
-    }, err => {
-      this.toastr.error('An unexpected error happend.', 'Error');
     });
   }
-
 
   notify() {
     this.toastr.success('Hello world!', 'Toastr fun!');

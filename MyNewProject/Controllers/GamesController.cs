@@ -74,6 +74,7 @@ namespace MyNewProject.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] SaveGameResource saveGameResource)
         {
+            //throw new Exception();
             var gameInDb = await gameRepository.Get(id);
 
             if (gameInDb == null)
