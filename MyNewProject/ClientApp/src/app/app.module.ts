@@ -15,10 +15,9 @@ import { FetchDataComponent } from './components/fetch-data/fetch-data.component
 import { GameComponent } from './components/game/game.component';
 
 import { GameService } from './services/game.service';
-import { EditGameComponent } from './components/edit-game/edit-game.component';
-import { NewGameComponent } from './components/new-game/new-game.component';
 import { GameInfoComponent } from './components/game-info/game-info.component';
 import { AppErrorHandler } from './app.error-handler';
+import { GameFormComponent } from './components/game-form/game-form.component';
 
 @NgModule({
   declarations: [
@@ -28,9 +27,8 @@ import { AppErrorHandler } from './app.error-handler';
     CounterComponent,
     FetchDataComponent,
     GameComponent,
-    EditGameComponent,
-    NewGameComponent,
-    GameInfoComponent
+    GameInfoComponent,
+    GameFormComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -43,8 +41,8 @@ import { AppErrorHandler } from './app.error-handler';
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'games', component: GameComponent },
-      { path: 'games/edit/:id', component: EditGameComponent },
-      { path: 'games/new', component: NewGameComponent },
+      { path: 'games/new', component: GameFormComponent },
+      { path: 'games/edit/:id', component: GameFormComponent },
       { path: 'games/info/:id', component: GameInfoComponent }
     ]),
     ToastrModule.forRoot()

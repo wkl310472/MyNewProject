@@ -32,7 +32,7 @@ export class GameService{
   }
 
   createGame(game: any) {
-    return this.http.post('/api/games/', JSON.stringify(game),
+    return this.http.post('/api/games', JSON.stringify(game),
       { headers: { 'Content-Type': 'application/json' }, observe: 'body', responseType: 'json' });
   }
 }
