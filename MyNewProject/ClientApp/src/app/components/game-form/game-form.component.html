@@ -1,0 +1,73 @@
+
+<h1 *ngIf="this.game.id">Edit Game</h1>
+<h1 *ngIf="!this.game.id">New Game</h1>
+
+<form #g="ngForm" (ngSubmit)="submit()">
+
+  <mat-form-field class="full-width">
+    <input [(ngModel)]="game.name"
+           name="name"
+           matInput
+           placeholder="Name"
+           required
+           minlength="2"
+           maxlength="255"
+           #gameName="ngModel">
+    <mat-error *ngIf="gameName.invalid && gameName.errors.minlength">Name should be at least {{gameName.errors.minlength.requiredLength}} characters</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input [(ngModel)]="game.developer"
+           name="developer"
+           matInput
+           placeholder="Developer"
+           required
+           minlength="2"
+           maxlength="255"
+           #gameDeveloper="ngModel">
+    <mat-error *ngIf="gameDeveloper.invalid && gameDeveloper.errors.minlength">Developer should be at least {{gameDeveloper.errors.minlength.requiredLength}} characters</mat-error>
+
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input [(ngModel)]="game.release"
+           name="release"
+           matInput
+           [matDatepicker]="picker"
+           placeholder="Release Date"
+           required
+           #gameRelease="ngModel">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker color="primary"></mat-datepicker>
+  </mat-form-field>
+
+
+  <h2 class="label-small">Genres</h2>
+
+  <section>
+    <mat-checkbox class="checkbox-margin" *ngFor="let genre of genres" color="primary"
+                  [checked]="game.genres.includes(genre.id)"
+                  (change)="onGenresChange($event,genre.id)">
+      {{genre.name}}
+    </mat-checkbox>
+  </section>
+
+  <h2 class="label-small">Platforms</h2>
+
+  <section>
+    <mat-checkbox class="checkbox-margin" *ngFor="let platform of platforms" color="primary"
+                  [checked]="game.platforms.includes(platform.id)"
+                  (change)="onPlatformsChange($event,platform.id)">
+      {{platform.name}}
+    </mat-checkbox>
+  </section>
+
+  <div class="button-row">
+    <button mat-raised-button color="primary" type="button" [routerLink]="['/games']">Back</button>
+    <button mat-raised-button color="primary" type="reset" (click)="reset()">Reset</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!g.valid">Save</button>
+  </div>
+
+  <p>{{g.value | json}}</p>
+  <p>{{game | json}}</p>
+ </form>
