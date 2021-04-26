@@ -4,6 +4,12 @@ import { CommonModule } from '@angular/common';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { RouterModule } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
 
@@ -36,6 +42,12 @@ import { GameFormComponent } from './components/game-form/game-form.component';
     CommonModule,
     HttpClientModule,
     FormsModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatMomentDateModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
@@ -49,6 +61,7 @@ import { GameFormComponent } from './components/game-form/game-form.component';
   ],
   providers: [
     { provide: ErrorHandler, useClass: AppErrorHandler },
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
     GameService
   ],
   bootstrap: [AppComponent]
