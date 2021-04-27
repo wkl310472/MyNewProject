@@ -9,15 +9,43 @@ table {
 
 .container-flex{
     display:flex;
-    justify-content:space-between;
+    width:100%;
 }
 
-.container-flex button{
-    height:80%;
-    align-self:center;
+.flex-start {
+  justify-content: flex-start;
+}
+
+.margin-horizontal {
+  margin: 0;
+}
+
+.flex-end {
+  justify-content: flex-end;
+}
+
+
+.container-flex button {
+  margin: 0.75rem 0.25rem;
 }
 
 .mat-form-field {
   font-size: 14px;
   width: 40%;
+}
+
+.cell-center-align {
+  text-align: center;
+  justify-content: center;
+}
+
+@media screen and (min-width: 768px) {
+  .margin-horizontal {
+    margin: 0 2rem;
+  }
+
+  .container-flex button {
+    margin: 0.75rem;
+  }
+
 }

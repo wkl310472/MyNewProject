@@ -62,12 +62,12 @@
     </mat-checkbox>
   </section>
 
-  <div class="button-row">
+  <div class="container-inline">
     <button mat-raised-button color="primary" type="button" [routerLink]="['/games']">Back</button>
     <button mat-raised-button color="primary" type="reset" (click)="reset()">Reset</button>
     <button mat-raised-button color="primary" type="submit" [disabled]="!g.valid">Save</button>
   </div>
 
-  <p>{{g.value | json}}</p>
-  <p>{{game | json}}</p>
+  <!--<p>{{g.value | json}}</p>
+  <p>{{game | json}}</p>-->
  </form>

@@ -8,7 +8,7 @@
 }
 
 .full-width{
-    width:60%;
+    width:100%;
 }
 
 .label-small{
@@ -17,15 +17,33 @@
     color:rgba(0,0,0,0.42);
 }
 
-.button-row button {
+.container-inline button {
   margin-right: 1rem;
 }
 
-.button-row{
-    margin-top:2rem;
+.container-inline{
+    display:flex;
+    justify-content:space-between;
+    margin:2rem 0;
+    width:100%;
+    padding:0 1.5rem;
 }
 
 h1{
     font-size:x-large;
     margin-bottom:1.5rem;
+}
+
+@media screen and (min-width: 768px) {
+  .full-width {
+    width: 60%;
+  }
+
+  .container-inline {
+    display: block;
+  }
+
+  .container-inline button {
+    margin-right: 2rem;
+  }
 }

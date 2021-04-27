@@ -33,3 +33,8 @@ button:focus {
   margin-right:1rem;
 }
 
+.item-block {
+  display: block;
+}
+
+
