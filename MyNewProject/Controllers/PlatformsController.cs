@@ -32,7 +32,7 @@ namespace MyNewProject.Controllers
         public async Task<IActionResult> Get()
         {
             var platforms = await platformRepository.Get(includeRelated: false);
-            var result = mapper.Map<List<Platform>, List<KeyValuePairResource>>(platforms);
+            var result = mapper.Map<IEnumerable<Platform>, IEnumerable<KeyValuePairResource>>(platforms);
             return Ok(result);
         }
 

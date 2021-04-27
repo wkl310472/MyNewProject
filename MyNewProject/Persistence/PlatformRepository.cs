@@ -17,7 +17,7 @@ namespace MyNewProject.Persistence
         }
 
 
-        public async Task<List<Platform>> Get(bool includeRelated = true)
+        public async Task<IEnumerable<Platform>> Get(bool includeRelated = true)
         {
             if (!includeRelated)
             {

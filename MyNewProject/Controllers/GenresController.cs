@@ -32,7 +32,7 @@ namespace MyNewProject.Controllers
         public async Task<IActionResult> Get()
         {
             var genres = await genreRepository.Get(includeRelated: false);
-            var result = mapper.Map<List<Genre>, List<KeyValuePairResource>>(genres);
+            var result = mapper.Map<IEnumerable<Genre>, IEnumerable<KeyValuePairResource>>(genres);
             return Ok(result);
         }
 

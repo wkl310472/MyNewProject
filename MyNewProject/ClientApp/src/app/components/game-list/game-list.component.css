@@ -1,0 +1,23 @@
+h1 {
+  font-size: x-large;
+  margin-bottom: 1.5rem;
+}
+
+table {
+  width: 100%;
+}
+
+.container-flex{
+    display:flex;
+    justify-content:space-between;
+}
+
+.container-flex button{
+    height:80%;
+    align-self:center;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 40%;
+}

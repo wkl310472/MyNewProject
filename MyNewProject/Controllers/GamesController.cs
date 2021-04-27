@@ -32,7 +32,7 @@ namespace MyNewProject.Controllers
         public async Task<IActionResult> Get()
         {
             var games = await gameRepository.Get();
-            var result = mapper.Map<List<Game>, List<GameResource>>(games);
+            var result = mapper.Map<IEnumerable<Game>, IEnumerable<GameResource>>(games);
             return Ok(result);
         }
 

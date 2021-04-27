@@ -8,7 +8,7 @@ namespace MyNewProject.Core
 {
     public interface IRepository<T>
     {
-        Task<List<T>> Get(bool includeRelated = true);
+        Task<IEnumerable<T>> Get(bool includeRelated = true);
         Task<T> Get(int id, bool includeRelated = true);
         void Add(T item);
         void Remove(T item);

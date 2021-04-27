@@ -16,7 +16,7 @@ namespace MyNewProject.Persistence
             this.context = context;
         }
 
-        public async Task<List<Game>> Get(bool includeRelated = true)
+        public async Task<IEnumerable<Game>> Get(bool includeRelated = true)
         {
             if (!includeRelated)
             {

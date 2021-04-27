@@ -10,6 +10,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
 
@@ -19,11 +20,13 @@ import { HomeComponent } from './components/home/home.component';
 import { CounterComponent } from './components/counter/counter.component';
 import { FetchDataComponent } from './components/fetch-data/fetch-data.component';
 import { GameComponent } from './components/game/game.component';
+import { GameFormComponent } from './components/game-form/game-form.component';
+import { GameInfoComponent } from './components/game-info/game-info.component';
+import { GameListComponent } from './components/game-list/game-list.component';
 
 import { GameService } from './services/game.service';
-import { GameInfoComponent } from './components/game-info/game-info.component';
+
 import { AppErrorHandler } from './app.error-handler';
-import { GameFormComponent } from './components/game-form/game-form.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,8 @@ import { GameFormComponent } from './components/game-form/game-form.component';
     FetchDataComponent,
     GameComponent,
     GameInfoComponent,
-    GameFormComponent
+    GameFormComponent,
+    GameListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -48,11 +52,12 @@ import { GameFormComponent } from './components/game-form/game-form.component';
     MatInputModule,
     MatFormFieldModule,
     MatMomentDateModule,
+    MatTableModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'games', component: GameComponent },
+      { path: 'games', component: GameListComponent },
       { path: 'games/new', component: GameFormComponent },
       { path: 'games/edit/:id', component: GameFormComponent },
       { path: 'games/info/:id', component: GameInfoComponent }
