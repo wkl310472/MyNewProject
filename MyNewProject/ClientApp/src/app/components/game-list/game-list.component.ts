@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { GameService } from '../../services/game.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+
 
 @Component({
   selector: 'app-game-list',
@@ -20,12 +23,18 @@ export class GameListComponent implements OnInit {
     platforms: []
   };
 
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
+
   constructor(private service: GameService) { }
 
   ngOnInit() {
     this.service.getAllGames().subscribe(games => {
       this.games = games;
       this.dataSource = new MatTableDataSource(this.games);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
     });
 
     this.service.getGenres().subscribe(genres => {
@@ -46,6 +55,7 @@ export class GameListComponent implements OnInit {
       let games = this.games;
       games = games.filter(g => this.isMatch(g));
       this.dataSource.data = games;
+      this.opened = false;
     }
   }
 

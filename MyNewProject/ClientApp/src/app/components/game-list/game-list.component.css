@@ -24,7 +24,6 @@ table {
   justify-content: flex-end;
 }
 
-
 .container-flex button {
   margin: 0.75rem 0.25rem;
 }
@@ -37,6 +36,15 @@ table {
 .cell-center-align {
   text-align: center;
   justify-content: center;
+}
+
+.filter-nav{
+    font-size:0.75rem;
+}
+
+.filter-nav p {
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 @media screen and (min-width: 768px) {
