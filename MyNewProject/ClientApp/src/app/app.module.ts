@@ -15,6 +15,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
 
@@ -61,6 +63,8 @@ import { AppErrorHandler } from './app.error-handler';
     MatSidenavModule,
     MatSortModule,
     MatTableModule,
+    MatTabsModule,
+    MatTooltipModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
@@ -68,7 +72,8 @@ import { AppErrorHandler } from './app.error-handler';
       { path: 'games', component: GameListComponent },
       { path: 'games/new', component: GameFormComponent },
       { path: 'games/edit/:id', component: GameFormComponent },
-      { path: 'games/info/:id', component: GameInfoComponent }
+      { path: 'games/info/:id', component: GameInfoComponent },
+      { path: '**', redirectTo: '' },
     ]),
     ToastrModule.forRoot()
   ],

@@ -59,14 +59,21 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef class="cell-center-align"> Action </th>
         <td mat-cell *matCellDef="let game" class="cell-center-align">
-          <button mat-button color="primary" type="button" [routerLink]="['/games/edit',game.id]"><mat-icon>edit</mat-icon></button>
+          <button mat-button
+                  color="primary"
+                  type="button"
+                  [routerLink]="['/games/edit',game.id]"
+                  matTooltip="Edit"
+                  [matTooltipShowDelay]="tooltipShowDelay.value">
+              <mat-icon>edit</mat-icon>
+          </button>
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
   </mat-sidenav-content>
 </mat-sidenav-container>
 

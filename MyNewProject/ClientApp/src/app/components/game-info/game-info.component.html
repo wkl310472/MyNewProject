@@ -1,3 +1,27 @@
 <p>game-info works!</p>
 
-<button class="btn btn-primary" [routerLink]="['/games']">Back</button>
+
+<mat-tab-group>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>info</mat-icon>
+      Game-Info
+    </ng-template>
+    <ng-template matTabContent>
+      Content1
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>photo</mat-icon>
+      Photos
+    </ng-template>
+    <ng-template matTabContent>
+      Content2
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>
+
+
+<button mat-raised-button color="primary" type="button" [routerLink]="['/games']">Back</button>

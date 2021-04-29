@@ -3,7 +3,7 @@ import { GameService } from '../../services/game.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-game-list',
@@ -26,6 +26,7 @@ export class GameListComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
+  tooltipShowDelay = new FormControl(500);
 
   constructor(private service: GameService) { }
 
@@ -55,8 +56,8 @@ export class GameListComponent implements OnInit {
       let games = this.games;
       games = games.filter(g => this.isMatch(g));
       this.dataSource.data = games;
-      this.opened = false;
     }
+    this.opened = false;
   }
 
   onGenresChange(event, genreId: number) {
@@ -80,11 +81,17 @@ export class GameListComponent implements OnInit {
   }
 
   resetFilter() {
-    this.filter = {
-      genres:[],
-      platforms:[]
+    if (this.filter.genres.length > 0 || this.filter.platforms.length > 0) {
+      this.filter = {
+        genres: [],
+        platforms: []
+      }
+      this.dataSource.data = this.games;
     }
-    this.dataSource.data = this.games;
+    else {
+      this.opened = false;
+    }
+
   }
 
   isMatch (game: any){
