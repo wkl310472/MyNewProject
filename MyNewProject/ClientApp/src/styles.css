@@ -37,4 +37,20 @@ button:focus {
   display: block;
 }
 
+.container-flex {
+  display: flex;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.flex-start {
+  justify-content: flex-start;
+}
+
+.flex-end {
+  justify-content: flex-end;
+}
+
 

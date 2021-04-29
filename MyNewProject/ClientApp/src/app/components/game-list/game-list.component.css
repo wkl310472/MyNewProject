@@ -7,23 +7,6 @@ table {
   width: 100%;
 }
 
-.container-flex{
-    display:flex;
-    width:100%;
-}
-
-.flex-start {
-  justify-content: flex-start;
-}
-
-.margin-horizontal {
-  margin: 0;
-}
-
-.flex-end {
-  justify-content: flex-end;
-}
-
 .container-flex button {
   margin: 0.75rem 0.25rem;
 }
@@ -48,7 +31,7 @@ table {
 }
 
 @media screen and (min-width: 768px) {
-  .margin-horizontal {
+  .filter-search {
     margin: 0 2rem;
   }
 

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { GameService } from '../../services/game.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-game-info',
@@ -7,9 +10,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GameInfoComponent implements OnInit {
 
-  constructor() { }
+  game: any = {
+    genres: [],
+    platforms: []
+  };
+
+  constructor(private route: ActivatedRoute, private service: GameService, private toastr: ToastrService) {
+    this.route.params.subscribe(params => {
+      this.game.id = params['id'] ? +params['id'] : NaN;
+    });
+  }
 
   ngOnInit() {
+    if (this.game.id) {
+      this.service.getGame(this.game.id).subscribe(game => {
+        this.game = game;
+      });
+    }
   }
 
 }

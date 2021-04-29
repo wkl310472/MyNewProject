@@ -1,24 +1,18 @@
 
-.full-width{
-    width:100%;
-}
-
 .label-small{
     margin-top:1rem;
     font-size:0.75rem;
     color:rgba(0,0,0,0.42);
 }
 
-.container-inline button {
+.container-flex button {
   margin-right: 1rem;
 }
 
-.container-inline{
-    display:flex;
+.container-flex{
     justify-content:space-between;
     margin:2rem 0;
-    width:100%;
-    padding:0 1.5rem;
+    padding-right:1.5rem;
 }
 
 h1{
@@ -31,11 +25,11 @@ h1{
     width: 60%;
   }
 
-  .container-inline {
-    display: block;
+  .container-flex {
+    justify-content:flex-start;
   }
 
-  .container-inline button {
+  .container-flex button {
     margin-right: 2rem;
   }
 }

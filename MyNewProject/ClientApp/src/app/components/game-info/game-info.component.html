@@ -1,4 +1,4 @@
-<p>game-info works!</p>
+<h1>game-info works!</h1>
 
 
 <mat-tab-group>
@@ -8,7 +8,33 @@
       Game-Info
     </ng-template>
     <ng-template matTabContent>
-      Content1
+      <mat-list>
+        <mat-list-item>
+          <h4 mat-line>Name</h4>
+          <p mat-line> {{game.name}} </p>
+        </mat-list-item>
+        <mat-list-item>
+          <h4 mat-line>Developer</h4>
+          <p mat-line> {{game.developer}} </p>
+        </mat-list-item>
+        <mat-list-item>
+          <h4 mat-line>Release Date</h4>
+          <p mat-line> {{game.release | date}} </p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <h4 mat-line>Genres</h4>
+          <p mat-line>
+            <span *ngFor="let genre of game.genres">{{genre.name}}&nbsp;&nbsp;</span>
+          </p>
+        </mat-list-item>
+        <mat-list-item>
+          <h4 mat-line>Platforms</h4>
+          <p mat-line>
+            <span *ngFor="let platform of game.platforms">{{platform.name}}&nbsp;&nbsp;</span>
+          </p>
+        </mat-list-item>
+      </mat-list>
     </ng-template>
   </mat-tab>
 

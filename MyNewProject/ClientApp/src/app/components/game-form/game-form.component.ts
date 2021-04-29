@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { GameService } from '../../services/game.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -17,7 +17,7 @@ export class GameFormComponent implements OnInit {
   genres;
   platforms;
 
-  constructor(private route: ActivatedRoute, private router: Router, private service: GameService, private toastr: ToastrService) {
+  constructor(private route: ActivatedRoute, private service: GameService, private toastr: ToastrService) {
     this.route.params.subscribe(params => {
       this.game.id = params['id'] ? +params['id'] : NaN;
     });

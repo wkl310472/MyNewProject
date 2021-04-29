@@ -52,11 +52,13 @@ export class GameListComponent implements OnInit {
   }
 
   onFilterChange() {
+    
+    let games = this.games;
     if (this.filter.genres.length > 0 || this.filter.platforms.length > 0) {
-      let games = this.games;
       games = games.filter(g => this.isMatch(g));
-      this.dataSource.data = games;
     }
+
+    this.dataSource.data = games;
     this.opened = false;
   }
 
@@ -82,16 +84,18 @@ export class GameListComponent implements OnInit {
 
   resetFilter() {
     if (this.filter.genres.length > 0 || this.filter.platforms.length > 0) {
-      this.filter = {
-        genres: [],
-        platforms: []
-      }
-      this.dataSource.data = this.games;
+      this.opened = true;
     }
     else {
       this.opened = false;
     }
 
+    this.filter = {
+      genres: [],
+      platforms: []
+    }
+
+    this.dataSource.data = this.games;
   }
 
   isMatch (game: any){
