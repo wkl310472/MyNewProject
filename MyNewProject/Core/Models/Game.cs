@@ -13,11 +13,11 @@ namespace MyNewProject.Core.Models
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(255)]
+        [StringLength(255)]
         public string Name { get; set; }
 
         [Required]
-        [MaxLength(255)]
+        [StringLength(255)]
         public string Developer { get; set; }
 
         [Required]
@@ -25,11 +25,13 @@ namespace MyNewProject.Core.Models
 
         public virtual ICollection<GameGenre> Genres { get; set; }
         public virtual ICollection<GamePlatform> Platforms { get; set; }
+        public virtual ICollection<Photo> Photos { get; set; }
 
         public Game()
         {
             Genres = new Collection<GameGenre>();
             Platforms = new Collection<GamePlatform>();
+            Photos = new Collection<Photo>();
         }
     }
 }

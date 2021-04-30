@@ -13,6 +13,7 @@ namespace MyNewProject.Persistence
         public virtual DbSet<Game> Games { get; set; }
         public virtual DbSet<Genre> Genres { get; set; }
         public virtual DbSet<Platform> Platforms { get; set; }
+        public virtual DbSet<Photo> Photos { get; set; }
 
         public GamestopDbContext(DbContextOptions<GamestopDbContext> options):base(options)
         {

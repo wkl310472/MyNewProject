@@ -21,6 +21,7 @@ namespace MyNewProject.Mapping
                 .ForMember(gr => gr.Platforms, opt => opt.MapFrom(g => g.Platforms.Select(p => new KeyValuePairResource { Id = p.Platform.Id, Name = p.Platform.Name })));
             CreateMap<Genre, KeyValuePairResource>();
             CreateMap<Platform, KeyValuePairResource>();
+            CreateMap<Photo, PhotoResource>();
 
             CreateMap<SaveGameResource, Game>()
                 .ForMember(g => g.Id, opt => opt.Ignore())
@@ -66,6 +67,7 @@ namespace MyNewProject.Mapping
                 .ForMember(g => g.Id, opt => opt.Ignore());
             CreateMap<KeyValuePairResource, Platform>()
                 .ForMember(p => p.Id, opt => opt.Ignore());
+            CreateMap<PhotoResource, Photo>();
 
         }
     }

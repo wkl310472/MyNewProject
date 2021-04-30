@@ -42,6 +42,8 @@
     <Compile Remove="Migrations\20210418133426_reconstructureManyToManyRelationships.Designer.cs" />
     <Compile Remove="Migrations\20210418190953_setGameClassPropertyReleaseToNullable.cs" />
     <Compile Remove="Migrations\20210418190953_setGameClassPropertyReleaseToNullable.Designer.cs" />
+    <Compile Remove="Migrations\20210430072052_addPhotoModel.cs" />
+    <Compile Remove="Migrations\20210430072052_addPhotoModel.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

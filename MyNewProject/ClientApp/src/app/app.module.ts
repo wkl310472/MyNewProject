@@ -33,8 +33,10 @@ import { GameInfoComponent } from './components/game-info/game-info.component';
 import { GameListComponent } from './components/game-list/game-list.component';
 
 import { GameService } from './services/game.service';
+import { PhotoService } from './services/photo.service';
 
 import { AppErrorHandler } from './app.error-handler';
+
 
 @NgModule({
   declarations: [
@@ -84,7 +86,8 @@ import { AppErrorHandler } from './app.error-handler';
   providers: [
     { provide: ErrorHandler, useClass: AppErrorHandler },
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
-    GameService
+    GameService,
+    PhotoService
   ],
   bootstrap: [AppComponent]
 })

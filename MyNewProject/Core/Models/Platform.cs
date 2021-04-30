@@ -13,7 +13,7 @@ namespace MyNewProject.Core.Models
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(255)]
+        [StringLength(255)]
         public string Name { get; set; }
         public virtual ICollection<GamePlatform> Games { get; set; }
 
