@@ -6,7 +6,7 @@
 
   <mat-sidenav #sidenav mode="side" [(opened)]="opened" class="filter-nav">
     <p>Genres</p>
-    <mat-checkbox class="checkbox-margin item-block"
+    <mat-checkbox class="margin-right item-block"
                   *ngFor="let genre of genres"
                   color="primary"
                   [checked]="filter.genres.includes(genre.id)"
@@ -14,7 +14,7 @@
       {{genre.name}}
     </mat-checkbox>
     <p>Platforms</p>
-    <mat-checkbox class="checkbox-margin item-block"
+    <mat-checkbox class="margin-right item-block"
                   *ngFor="let platform of platforms"
                   color="primary"
                   [checked]="filter.platforms.includes(platform.id)"

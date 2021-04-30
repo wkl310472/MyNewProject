@@ -45,7 +45,7 @@
   <h2 class="label-small">Genres</h2>
 
   <section>
-    <mat-checkbox class="checkbox-margin" *ngFor="let genre of genres" color="primary"
+    <mat-checkbox class="margin-right" *ngFor="let genre of genres" color="primary"
                   [checked]="game.genres.includes(genre.id)"
                   (change)="onGenresChange($event,genre.id)">
       {{genre.name}}
@@ -55,7 +55,7 @@
   <h2 class="label-small">Platforms</h2>
 
   <section>
-    <mat-checkbox class="checkbox-margin" *ngFor="let platform of platforms" color="primary"
+    <mat-checkbox class="margin-right" *ngFor="let platform of platforms" color="primary"
                   [checked]="game.platforms.includes(platform.id)"
                   (change)="onPlatformsChange($event,platform.id)">
       {{platform.name}}

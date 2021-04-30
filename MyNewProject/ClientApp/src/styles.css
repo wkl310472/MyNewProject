@@ -5,6 +5,11 @@ a {
   color: #0366d6;
 }
 
+h1 {
+  font-size: x-large;
+  margin-bottom: 1.5rem;
+}
+
 h2{
     margin-top:2rem;
 }
@@ -29,8 +34,12 @@ button:focus {
   outline: 0;
 }
 
-.checkbox-margin {
+.margin-right {
   margin-right:1rem;
+}
+
+.margin-top {
+  margin-top: 1rem;
 }
 
 .item-block {
@@ -53,4 +62,7 @@ button:focus {
   justify-content: flex-end;
 }
 
+.flex-between {
+  justify-content: space-between;
+}
 

@@ -11,11 +11,12 @@ import { PhotoService } from '../../services/photo.service';
 })
 export class GameInfoComponent implements OnInit {
 
-  @ViewChild('fileInput', { static: false }) fileInput: ElementRef;
   game: any = {
     genres: [],
     platforms: []
   };
+
+  photos;
 
   constructor(private route: ActivatedRoute,
     private gameService: GameService,
@@ -27,17 +28,17 @@ export class GameInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.game.id) {
-      this.gameService.getGame(this.game.id).subscribe(game => {
-        this.game = game;
-      });
-    }
+    this.photoService.getPhotos(this.game.id).subscribe(photos => {
+      this.photos = photos;
+    });
+
+    this.gameService.getGame(this.game.id).subscribe(game => {
+      this.game = game;
+    });
   }
 
-  uploadPhoto() {
-    let nativeElement: HTMLInputElement = this.fileInput.nativeElement;
-    this.photoService.upload(this.game.id, nativeElement.files[0])
-      .subscribe(res => console.log(res));
+  onUpload(event) {
+    this.photoService.upload(this.game.id, event.target.files[0])
+      .subscribe(photo => this.photos.push(photo));
   }
-
 }

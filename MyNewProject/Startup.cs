@@ -34,6 +34,7 @@ namespace MyNewProject
             services.AddScoped<IRepository<Game>, GameRepository>();
             services.AddScoped<IRepository<Genre>, GenreRepository>();
             services.AddScoped<IRepository<Platform>, PlatformRepository>();
+            services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 

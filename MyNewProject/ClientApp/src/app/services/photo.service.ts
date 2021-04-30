@@ -14,6 +14,9 @@ export class PhotoService {
     formData.append('file', photo);
 
     return this.http.post('/api/games/' + gameId + '/photos', formData);
+  }
 
+  getPhotos(gameId) {
+    return this.http.get('/api/games/' + gameId + '/photos');
   }
 }

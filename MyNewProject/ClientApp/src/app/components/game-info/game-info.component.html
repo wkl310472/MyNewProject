@@ -1,4 +1,8 @@
-<h1>game-info works!</h1>
+<div class="container-flex flex-between">
+  <h1>Game Info</h1>
+  <button mat-raised-button color="primary" type="button" [routerLink]="['/games']">Back</button>
+</div>
+
 
 
 <mat-tab-group>
@@ -44,10 +48,14 @@
       Photos
     </ng-template>
     <ng-template matTabContent>
-      <input type="file" (change)="uploadPhoto()" #fileInput/>
+      <input type="file" (change)="onUpload($event)" #fileInput multiple accept="image/png,image/jpg,image/jpeg"/>
+      <div class="margin-top">
+        <button mat-raised-button color="primary" type="button" (click)="fileInput.click()">Select File</button>
+      </div>
+      <img *ngFor="let photo of photos" src="/uploads/{{photo.fileName}}" class="img-thumbnail" />
     </ng-template>
   </mat-tab>
 </mat-tab-group>
 
 
-<button mat-raised-button color="primary" type="button" [routerLink]="['/games']">Back</button>
+

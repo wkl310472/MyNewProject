@@ -1,0 +1,11 @@
+.container-flex.flex-between button{
+    margin-bottom:1.5rem;
+}
+
+input{
+    display:none;
+}
+
+img{
+    margin:0.5rem 0;
+}

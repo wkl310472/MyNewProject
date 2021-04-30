@@ -25,15 +25,24 @@ namespace MyNewProject.Controllers
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
         private readonly IRepository<Game> gameRepository;
+        private readonly IPhotoRepository photoRepository;
         private readonly PhotoSettings photoSettings;
 
-        public PhotosController(IWebHostEnvironment host, IUnitOfWork unitOfWork, IMapper mapper,IRepository<Game> gameRepository,IOptionsSnapshot<PhotoSettings> options)
+        public PhotosController(IWebHostEnvironment host, IUnitOfWork unitOfWork, IMapper mapper,IRepository<Game> gameRepository, IPhotoRepository photoRepository, IOptionsSnapshot<PhotoSettings> options)
         {
             this.photoSettings = options.Value;
             this.host = host;
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
             this.gameRepository = gameRepository;
+            this.photoRepository = photoRepository;
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<PhotoResource>> Get(int gameId)
+        {
+            var photos = await photoRepository.GetPhotos(gameId);
+            return mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoResource>>(photos);
         }
 
         // POST api/games/id/<PhotosController>
