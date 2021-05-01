@@ -33,7 +33,7 @@
       <mat-form-field class="filter-search">
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
       </mat-form-field>
-      <div class="container-flex flex-end full-width margin-right">
+      <div class="container-flex flex-end dynamic-width margin-right">
         <button mat-raised-button color="primary" type="button" [routerLink]="['/games/new']">New Game</button>
       </div>
     </div>

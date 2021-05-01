@@ -8,10 +8,12 @@ export class PhotoService {
 
   constructor(private http: HttpClient) { }
 
-  upload(gameId, photo) {
+  upload(gameId, photos) {
     let formData = new FormData();
 
-    formData.append('file', photo);
+    for (let photo of photos) {
+      formData.append('file', photo);
+    }
 
     return this.http.post('/api/games/' + gameId + '/photos', formData);
   }

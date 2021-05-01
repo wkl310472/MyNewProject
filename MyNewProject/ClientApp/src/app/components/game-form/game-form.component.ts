@@ -96,13 +96,34 @@ export class GameFormComponent implements OnInit {
 
   upload(fileInput) {
     if (fileInput) {
-      this.photoService.upload(this.game.id, fileInput.files[0])
-        .subscribe(photo => this.photos.push(photo));
+      this.photoService.upload(this.game.id, fileInput.files)
+        .subscribe(photos => {
+          console.log(photos);
+          for (let photo of Object.values(photos)) {
+            this.photos.push(photo);
+          }
+        });
       this.previews = [];
       this.toastr.success('Image has been saved!', 'Success');
     }
     else {
       console.log('no image added');
+    }
+  }
+
+  delete(photo) {
+    let index;
+    if (photo.id) {
+      index = this.photos.indexOf(photo);
+      this.photos.splice(index, 1);
+
+      this.photoService.delete(this.game.id, photo.id).subscribe(p => {
+        console.log(p);
+      });
+    }
+    else {
+      index = this.previews.indexOf(photo);
+      this.previews.splice(index, 1);
     }
 
   }

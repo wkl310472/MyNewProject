@@ -11,6 +11,7 @@ using MyNewProject.Core;
 using AutoMapper;
 using MyNewProject.Controllers.Resources;
 using Microsoft.Extensions.Options;
+using System.Collections.ObjectModel;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -61,7 +62,7 @@ namespace MyNewProject.Controllers
 
         // POST api/games/id/<PhotosController>
         [HttpPost]
-        public async Task<IActionResult> Post(int gameId, IFormFile file) 
+        public async Task<IActionResult> Post(int gameId, IFormCollection files) 
         {
             var game = await gameRepository.Get(gameId, includeRelated: false);
             if (game == null)
@@ -69,44 +70,56 @@ namespace MyNewProject.Controllers
                 return NotFound();
             }
 
-            if (file == null)
+            if (files.Files.Count == 0) 
             {
-                return BadRequest("Null file.");
-            }
-            if (file.Length == 0)
-            {
-                return BadRequest("Empty file.");
-            }
-            if (file.Length > photoSettings.MaxBytes)
-            {
-                return BadRequest("Max file size exceeded.");
-            }
-            if (!photoSettings.isSupported(file.FileName))
-            {
-                return BadRequest("Invalid file type.");
+                return BadRequest("No files uploaded.");
             }
 
             var uploadsFolderPath = Path.Combine(host.WebRootPath, "uploads");
-
             if (!Directory.Exists(uploadsFolderPath))
             {
                 Directory.CreateDirectory(uploadsFolderPath);
             }
 
-            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName).ToLower();
-            var filePath = Path.Combine(uploadsFolderPath, fileName);
+            var photos = new Collection<Photo>();
 
-            using (var stream = new FileStream(filePath, FileMode.Create))
+            foreach (var file in files.Files)
             {
-                await file.CopyToAsync(stream);
+                if (file == null)
+                {
+                    return BadRequest("Null file.");
+                }
+                if (file.Length == 0)
+                {
+                    return BadRequest("Empty file.");
+                }
+                if (file.Length > photoSettings.MaxBytes)
+                {
+                    return BadRequest("Max file size exceeded.");
+                }
+                if (!photoSettings.isSupported(file.FileName))
+                {
+                    return BadRequest("Invalid file type.");
+                }
+
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName).ToLower();
+                var filePath = Path.Combine(uploadsFolderPath, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                var photo = new Photo { FileName = fileName };
+
+                game.Photos.Add(photo);
+
+                photos.Add(photo);
             }
 
-            var photo = new Photo { FileName = fileName };
-
-            game.Photos.Add(photo);
             await unitOfWork.CompleteAsync();
 
-            var result = mapper.Map<Photo, PhotoResource>(photo);
+            var result = mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoResource>>(photos);
 
             return Ok(result);
         }

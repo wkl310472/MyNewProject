@@ -58,6 +58,10 @@ button:focus {
   display: flex;
 }
 
+.dynamic-width {
+  width: 100%;
+}
+
 .full-width {
   width: 100%;
 }
@@ -74,8 +78,22 @@ button:focus {
   justify-content: space-between;
 }
 
-@media screen and (min-width: 768px) {
-  .full-width {
+.container-relative {
+  position: relative;
+}
+
+.container-relative img {
+  display: block;
+}
+
+.container-relative button {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+  @media screen and (min-width: 768px) {
+  .dynamic-width {
     width: 60%;
   }
 

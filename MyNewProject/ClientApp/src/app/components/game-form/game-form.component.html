@@ -1,10 +1,10 @@
-<div class="container-flex flex-between full-width">
+<div class="container-flex flex-between dynamic-width">
   <h1 *ngIf="this.game.id" class="margin-right">Edit Game</h1>
   <h1 *ngIf="!this.game.id" class="margin-right">New Game</h1>
   <button mat-raised-button color="primary" type="button" [routerLink]="['/games']" class="margin-left">Back</button>
 </div>
 
-<mat-tab-group class="full-width">
+<mat-tab-group class="dynamic-width">
   <mat-tab>
     <ng-template mat-tab-label>
       <mat-icon>info</mat-icon>
@@ -12,7 +12,7 @@
     </ng-template>
     <ng-template matTabContent>
       <form #g="ngForm" (ngSubmit)="submit()">
-        <mat-form-field class="full-width margin-top">
+        <mat-form-field class="dynamic-width margin-top">
           <input [(ngModel)]="game.name"
                  name="name"
                  matInput
@@ -24,7 +24,7 @@
           <mat-error *ngIf="gameName.invalid && gameName.errors.minlength">Name should be at least {{gameName.errors.minlength.requiredLength}} characters</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="full-width">
+        <mat-form-field class="dynamic-width">
           <input [(ngModel)]="game.developer"
                  name="developer"
                  matInput
@@ -37,7 +37,7 @@
 
         </mat-form-field>
 
-        <mat-form-field class="full-width">
+        <mat-form-field class="dynamic-width">
           <input [(ngModel)]="game.release"
                  name="release"
                  matInput
@@ -70,7 +70,7 @@
           </mat-checkbox>
         </section>
 
-        <div class="container-flex flex-between full-width margin-top">
+        <div class="container-flex flex-between dynamic-width margin-top">
           <button mat-raised-button color="primary" type="reset" (click)="reset()" class="margin-right">Reset</button>
           <button mat-raised-button color="primary" type="submit" [disabled]="!g.valid" class="margin-left">Save</button>
         </div>
@@ -96,8 +96,16 @@
         <button mat-raised-button color="primary" type="button" (click)="fileInput.click()">Select File</button>
         <button mat-raised-button color="primary" type="button" (click)="upload(fileInput)">Upload</button>
       </div>
-      <img *ngFor="let photo of photos" src="/uploads/{{photo.fileName}}" class="img-thumbnail" />
-      <img class="img-thumbnail" *ngFor="let preview of previews" src="{{preview}}" alt="" />
+      <div *ngFor="let photo of photos" class="container-relative">
+        <img src="/uploads/{{photo.fileName}}" class="img-thumbnail full-width" />
+        <button mat-icon-button color="accent" type="button" (click)="delete(photo)"><mat-icon>remove_circle</mat-icon></button>
+      </div>
+
+      <div *ngFor="let preview of previews" class="container-relative">
+        <img src="{{preview}}" class="img-thumbnail full-width"/>
+        <button mat-icon-button color="accent" type="button" (click)="delete(preview)"><mat-icon>remove_circle_outline</mat-icon></button>
+      </div>
+      
 
     </ng-template>
   </mat-tab>
