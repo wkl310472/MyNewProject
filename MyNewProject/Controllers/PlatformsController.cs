@@ -58,7 +58,7 @@ namespace MyNewProject.Controllers
                 return BadRequest(ModelState);
             }
             var platform = mapper.Map<KeyValuePairResource, Platform>(platformResource);
-            platformRepository.Add(platform);
+            await platformRepository.Add(platform);
             await unitOfWork.CompleteAsync();
 
             platform = await platformRepository.Get(platform.Id, includeRelated: false);

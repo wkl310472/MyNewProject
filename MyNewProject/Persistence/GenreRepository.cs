@@ -40,9 +40,9 @@ namespace MyNewProject.Persistence
                 .SingleOrDefaultAsync(g => g.Id == id);
         }
 
-        public void Add(Genre genre)
+        public async Task Add(Genre genre)
         {
-            context.Add(genre);
+            await context.AddAsync(genre);
         }
 
         public void Remove(Genre genre)

@@ -41,9 +41,9 @@ namespace MyNewProject.Persistence
                 .SingleOrDefaultAsync(p => p.Id == id);
         }
 
-        public void Add(Platform platform)
+        public async Task Add(Platform platform)
         {
-            context.Add(platform);
+            await context.AddAsync(platform);
         }
 
         public void Remove(Platform platform)

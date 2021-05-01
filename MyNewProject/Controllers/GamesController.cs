@@ -59,7 +59,7 @@ namespace MyNewProject.Controllers
             }
             var game = mapper.Map<SaveGameResource, Game>(gameResource);
 
-            gameRepository.Add(game);
+            await gameRepository.Add(game);
 
             await unitOfWork.CompleteAsync();
 

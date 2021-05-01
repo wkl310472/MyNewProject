@@ -58,7 +58,7 @@ namespace MyNewProject.Controllers
                 return BadRequest(ModelState);
             }
             var genre = mapper.Map<KeyValuePairResource, Genre>(genreResource);
-            genreRepository.Add(genre);
+            await genreRepository.Add(genre);
             await unitOfWork.CompleteAsync();
 
             genre = await genreRepository.Get(genre.Id, includeRelated: false);

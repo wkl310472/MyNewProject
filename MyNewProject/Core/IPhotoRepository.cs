@@ -8,6 +8,8 @@ namespace MyNewProject.Core
 {
     public interface IPhotoRepository
     {
-        Task<IEnumerable<Photo>> GetPhotos(int GameId);
+        Task<IEnumerable<Photo>> GetPhotos(int gameId);
+        Task<Photo> GetPhoto(int gameId, int id);
+        void Remove(Photo photo);
     }
 }

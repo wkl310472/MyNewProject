@@ -38,11 +38,25 @@ namespace MyNewProject.Controllers
             this.photoRepository = photoRepository;
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int gameId,int id)
+        {
+            var photo = await photoRepository.GetPhoto(gameId,id);
+            if (photo == null)
+            {
+                return NotFound();
+            }
+            var result = mapper.Map<Photo, PhotoResource>(photo);
+            return Ok(result);
+        }
+
+
         [HttpGet]
-        public async Task<IEnumerable<PhotoResource>> Get(int gameId)
+        public async Task<IActionResult> Get(int gameId)
         {
             var photos = await photoRepository.GetPhotos(gameId);
-            return mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoResource>>(photos);
+            var result = mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoResource>>(photos);
+            return Ok(result);
         }
 
         // POST api/games/id/<PhotosController>
@@ -79,7 +93,7 @@ namespace MyNewProject.Controllers
                 Directory.CreateDirectory(uploadsFolderPath);
             }
 
-            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName).ToLower();
             var filePath = Path.Combine(uploadsFolderPath, fileName);
 
             using (var stream = new FileStream(filePath, FileMode.Create))
@@ -92,19 +106,33 @@ namespace MyNewProject.Controllers
             game.Photos.Add(photo);
             await unitOfWork.CompleteAsync();
 
-            return Ok(mapper.Map<Photo, PhotoResource>(photo));
+            var result = mapper.Map<Photo, PhotoResource>(photo);
+
+            return Ok(result);
         }
 
-        // PUT api/<PhotosController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, IFormFile file)
-        {
-        }
-
-        // DELETE api/<PhotosController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int gameId, int id)
         {
+            var photoInDb = await photoRepository.GetPhoto(gameId, id);
+            if (photoInDb == null)
+            {
+                return NotFound();
+            }
+
+            photoRepository.Remove(photoInDb);
+            await unitOfWork.CompleteAsync();
+
+            var uploadsFolderPath = Path.Combine(host.WebRootPath, "uploads");
+            var filePath = Path.Combine(uploadsFolderPath, photoInDb.FileName);
+            if (!Directory.Exists(uploadsFolderPath) || !System.IO.File.Exists(filePath))
+            {
+                return Ok("The photo has already been deleted");
+            }
+            System.IO.File.Delete(filePath);
+
+            var result = mapper.Map<Photo, PhotoResource>(photoInDb);
+            return Ok(result);
         }
     }
 }

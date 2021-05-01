@@ -44,9 +44,9 @@ namespace MyNewProject.Persistence
                 .SingleOrDefaultAsync(g => g.Id == id);
         }
 
-        public void Add(Game game)
+        public async Task Add(Game game)
         {
-            context.Add(game);
+            await context.AddAsync(game);
         }
 
         public void Remove(Game game)

@@ -10,7 +10,7 @@ namespace MyNewProject.Core
     {
         Task<IEnumerable<T>> Get(bool includeRelated = true);
         Task<T> Get(int id, bool includeRelated = true);
-        void Add(T item);
+        Task Add(T item);
         void Remove(T item);
     }
 }
