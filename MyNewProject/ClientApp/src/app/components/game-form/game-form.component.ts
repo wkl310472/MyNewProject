@@ -20,6 +20,8 @@ export class GameFormComponent implements OnInit {
 
   photos;
 
+  previews;
+
   constructor(private route: ActivatedRoute,
     private service: GameService,
     private photoService: PhotoService,
@@ -92,9 +94,31 @@ export class GameFormComponent implements OnInit {
     this.game.platforms = [];
   }
 
-  onUpload(event) {
-    this.photoService.upload(this.game.id, event.target.files[0])
-      .subscribe(photo => this.photos.push(photo));
+  upload(fileInput) {
+    if (fileInput) {
+      this.photoService.upload(this.game.id, fileInput.files[0])
+        .subscribe(photo => this.photos.push(photo));
+      this.previews = [];
+      this.toastr.success('Image has been saved!', 'Success');
+    }
+    else {
+      console.log('no image added');
+    }
+
   }
 
+  previewPhotos(fileInput) {
+
+    const files = fileInput.files;
+    this.previews = [];
+
+    for (let file of files) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.previews.push(reader.result as string);
+      };
+    }
+  }
 }
+

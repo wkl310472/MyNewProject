@@ -81,17 +81,24 @@
     </ng-template>
   </mat-tab>
 
-  <mat-tab>
+  <mat-tab [disabled]="!game.id">
     <ng-template mat-tab-label>
       <mat-icon>photo</mat-icon>
       Photos
     </ng-template>
     <ng-template matTabContent>
-      <input type="file" (change)="onUpload($event)" #fileInput accept="image/png,image/jpg,image/jpeg" class="input-image"/>
-      <div class="margin-top">
+      <input type="file" (change)="previewPhotos(fileInput)"
+             #fileInput
+             accept="image/png,image/jpg,image/jpeg"
+             class="input-image"
+             multiple />
+      <div class="container-flex flex-between">
         <button mat-raised-button color="primary" type="button" (click)="fileInput.click()">Select File</button>
+        <button mat-raised-button color="primary" type="button" (click)="upload(fileInput)">Upload</button>
       </div>
       <img *ngFor="let photo of photos" src="/uploads/{{photo.fileName}}" class="img-thumbnail" />
+      <img class="img-thumbnail" *ngFor="let preview of previews" src="{{preview}}" alt="" />
+
     </ng-template>
   </mat-tab>
 </mat-tab-group>
