@@ -27,7 +27,6 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
 import { CounterComponent } from './components/counter/counter.component';
 import { FetchDataComponent } from './components/fetch-data/fetch-data.component';
-import { GameComponent } from './components/game/game.component';
 import { GameFormComponent } from './components/game-form/game-form.component';
 import { GameInfoComponent } from './components/game-info/game-info.component';
 import { GameListComponent } from './components/game-list/game-list.component';
@@ -45,7 +44,6 @@ import { AppErrorHandler } from './app.error-handler';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    GameComponent,
     GameInfoComponent,
     GameFormComponent,
     GameListComponent

@@ -1,73 +1,97 @@
+<div class="container-flex flex-between full-width">
+  <h1 *ngIf="this.game.id" class="margin-right">Edit Game</h1>
+  <h1 *ngIf="!this.game.id" class="margin-right">New Game</h1>
+  <button mat-raised-button color="primary" type="button" [routerLink]="['/games']" class="margin-left">Back</button>
+</div>
 
-<h1 *ngIf="this.game.id">Edit Game</h1>
-<h1 *ngIf="!this.game.id">New Game</h1>
+<mat-tab-group class="full-width">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>info</mat-icon>
+      Game-Info
+    </ng-template>
+    <ng-template matTabContent>
+      <form #g="ngForm" (ngSubmit)="submit()">
+        <mat-form-field class="full-width margin-top">
+          <input [(ngModel)]="game.name"
+                 name="name"
+                 matInput
+                 placeholder="Name"
+                 required
+                 minlength="2"
+                 maxlength="255"
+                 #gameName="ngModel">
+          <mat-error *ngIf="gameName.invalid && gameName.errors.minlength">Name should be at least {{gameName.errors.minlength.requiredLength}} characters</mat-error>
+        </mat-form-field>
 
-<form #g="ngForm" (ngSubmit)="submit()">
+        <mat-form-field class="full-width">
+          <input [(ngModel)]="game.developer"
+                 name="developer"
+                 matInput
+                 placeholder="Developer"
+                 required
+                 minlength="2"
+                 maxlength="255"
+                 #gameDeveloper="ngModel">
+          <mat-error *ngIf="gameDeveloper.invalid && gameDeveloper.errors.minlength">Developer should be at least {{gameDeveloper.errors.minlength.requiredLength}} characters</mat-error>
 
-  <mat-form-field class="full-width">
-    <input [(ngModel)]="game.name"
-           name="name"
-           matInput
-           placeholder="Name"
-           required
-           minlength="2"
-           maxlength="255"
-           #gameName="ngModel">
-    <mat-error *ngIf="gameName.invalid && gameName.errors.minlength">Name should be at least {{gameName.errors.minlength.requiredLength}} characters</mat-error>
-  </mat-form-field>
+        </mat-form-field>
 
-  <mat-form-field class="full-width">
-    <input [(ngModel)]="game.developer"
-           name="developer"
-           matInput
-           placeholder="Developer"
-           required
-           minlength="2"
-           maxlength="255"
-           #gameDeveloper="ngModel">
-    <mat-error *ngIf="gameDeveloper.invalid && gameDeveloper.errors.minlength">Developer should be at least {{gameDeveloper.errors.minlength.requiredLength}} characters</mat-error>
-
-  </mat-form-field>
-
-  <mat-form-field class="full-width">
-    <input [(ngModel)]="game.release"
-           name="release"
-           matInput
-           [matDatepicker]="picker"
-           placeholder="Release Date"
-           required
-           #gameRelease="ngModel">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker color="primary"></mat-datepicker>
-  </mat-form-field>
+        <mat-form-field class="full-width">
+          <input [(ngModel)]="game.release"
+                 name="release"
+                 matInput
+                 [matDatepicker]="picker"
+                 placeholder="Release Date"
+                 required
+                 #gameRelease="ngModel">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker color="primary"></mat-datepicker>
+        </mat-form-field>
 
 
-  <h2 class="label-small">Genres</h2>
+        <h2 class="label-small">Genres</h2>
 
-  <section>
-    <mat-checkbox class="margin-right" *ngFor="let genre of genres" color="primary"
-                  [checked]="game.genres.includes(genre.id)"
-                  (change)="onGenresChange($event,genre.id)">
-      {{genre.name}}
-    </mat-checkbox>
-  </section>
+        <section>
+          <mat-checkbox class="margin-right" *ngFor="let genre of genres" color="primary"
+                        [checked]="game.genres.includes(genre.id)"
+                        (change)="onGenresChange($event,genre.id)">
+            {{genre.name}}
+          </mat-checkbox>
+        </section>
 
-  <h2 class="label-small">Platforms</h2>
+        <h2 class="label-small">Platforms</h2>
 
-  <section>
-    <mat-checkbox class="margin-right" *ngFor="let platform of platforms" color="primary"
-                  [checked]="game.platforms.includes(platform.id)"
-                  (change)="onPlatformsChange($event,platform.id)">
-      {{platform.name}}
-    </mat-checkbox>
-  </section>
+        <section>
+          <mat-checkbox class="margin-right" *ngFor="let platform of platforms" color="primary"
+                        [checked]="game.platforms.includes(platform.id)"
+                        (change)="onPlatformsChange($event,platform.id)">
+            {{platform.name}}
+          </mat-checkbox>
+        </section>
 
-  <div class="container-flex full-width ">
-    <button mat-raised-button color="primary" type="button" [routerLink]="['/games']">Back</button>
-    <button mat-raised-button color="primary" type="reset" (click)="reset()">Reset</button>
-    <button mat-raised-button color="primary" type="submit" [disabled]="!g.valid">Save</button>
-  </div>
+        <div class="container-flex flex-between full-width margin-top">
+          <button mat-raised-button color="primary" type="reset" (click)="reset()" class="margin-right">Reset</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!g.valid" class="margin-left">Save</button>
+        </div>
 
-  <!--<p>{{g.value | json}}</p>
-  <p>{{game | json}}</p>-->
- </form>
+        <!--<p>{{g.value | json}}</p>
+    <p>{{game | json}}</p>-->
+      </form>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>photo</mat-icon>
+      Photos
+    </ng-template>
+    <ng-template matTabContent>
+      <input type="file" (change)="onUpload($event)" #fileInput accept="image/png,image/jpg,image/jpeg" class="input-image"/>
+      <div class="margin-top">
+        <button mat-raised-button color="primary" type="button" (click)="fileInput.click()">Select File</button>
+      </div>
+      <img *ngFor="let photo of photos" src="/uploads/{{photo.fileName}}" class="img-thumbnail" />
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

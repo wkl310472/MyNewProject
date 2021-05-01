@@ -5,26 +5,20 @@
     color:rgba(0,0,0,0.42);
 }
 
-.container-flex button {
-  margin-right: 1rem;
+.input-image {
+  display: none;
 }
 
-.container-flex{
-    justify-content:space-between;
-    margin:2rem 0;
-    padding-right:1.5rem;
+.container-flex.flex-between button {
+  margin: 0 1.5rem 1.5rem 0;
+}
+
+img {
+  margin: 0.5rem 0;
 }
 
 @media screen and (min-width: 768px) {
-  .full-width {
-    width: 60%;
-  }
-
-  .container-flex {
-    justify-content:flex-start;
-  }
-
-  .container-flex button {
-    margin-right: 2rem;
+  .container-flex.flex-between button {
+    margin-right:3.5rem;
   }
 }

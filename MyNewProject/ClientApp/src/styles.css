@@ -38,6 +38,14 @@ button:focus {
   margin-right:1rem;
 }
 
+.margin-left {
+  margin-left:1rem;
+}
+
+.margin-bottom {
+  margin-bottom: 1rem;
+}
+
 .margin-top {
   margin-top: 1rem;
 }
@@ -66,3 +74,21 @@ button:focus {
   justify-content: space-between;
 }
 
+@media screen and (min-width: 768px) {
+  .full-width {
+    width: 60%;
+  }
+
+  .container-flex {
+    margin-top:2rem;
+  }
+
+  .flex-between {
+    justify-content:flex-start;
+  }
+
+  .container-flex.flex-between h1{
+      margin-right:4rem;
+  }
+
+}

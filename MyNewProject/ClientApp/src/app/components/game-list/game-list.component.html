@@ -21,19 +21,19 @@
                   (change)="onPlatformsChange($event,platform.id)">
       {{platform.name}}
     </mat-checkbox>
-    <div class="container-flex full-width">
+    <div class="container-flex">
       <button mat-raised-button color="primary" (click)="onFilterChange()" type="button" class="item-block">Confirm</button>
       <button mat-raised-button color="primary" (click)="resetFilter()" type="reset" class="item-block">Reset</button>
     </div>
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <div class="container-flex full-width flex-start">
+    <div class="container-flex flex-start">
       <button mat-button color="primary" (click)="sidenav.toggle()">Filter</button>
       <mat-form-field class="filter-search">
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
       </mat-form-field>
-      <div class="container-flex full-width flex-end">
+      <div class="container-flex flex-end full-width margin-right">
         <button mat-raised-button color="primary" type="button" [routerLink]="['/games/new']">New Game</button>
       </div>
     </div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GameService } from '../../services/game.service';
 import { ToastrService } from 'ngx-toastr';
+import { PhotoService } from '../../services/photo.service';
 
 @Component({
   selector: 'app-game-form',
@@ -17,7 +18,12 @@ export class GameFormComponent implements OnInit {
   genres;
   platforms;
 
-  constructor(private route: ActivatedRoute, private service: GameService, private toastr: ToastrService) {
+  photos;
+
+  constructor(private route: ActivatedRoute,
+    private service: GameService,
+    private photoService: PhotoService,
+    private toastr: ToastrService) {
     this.route.params.subscribe(params => {
       this.game.id = params['id'] ? +params['id'] : NaN;
     });
@@ -29,6 +35,10 @@ export class GameFormComponent implements OnInit {
         this.game = game;
         this.game.genres = game['genres'].map(item => item['id']);
         this.game.platforms = game['platforms'].map(item => item['id']);
+      });
+
+      this.photoService.getPhotos(this.game.id).subscribe(photos => {
+        this.photos = photos;
       });
     }
 
@@ -80,6 +90,11 @@ export class GameFormComponent implements OnInit {
   reset() {
     this.game.genres = [];
     this.game.platforms = [];
+  }
+
+  onUpload(event) {
+    this.photoService.upload(this.game.id, event.target.files[0])
+      .subscribe(photo => this.photos.push(photo));
   }
 
 }

@@ -35,6 +35,10 @@ table {
     margin: 0 2rem;
   }
 
+  .container-flex {
+    margin-top:0;
+  }
+
   .container-flex button {
     margin: 0.75rem;
   }

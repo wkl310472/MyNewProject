@@ -19,4 +19,8 @@ export class PhotoService {
   getPhotos(gameId) {
     return this.http.get('/api/games/' + gameId + '/photos');
   }
+
+  delete(gameId, id) {
+    return this.http.delete('/api/games/' + gameId + '/photos/' + id);
+  }
 }
