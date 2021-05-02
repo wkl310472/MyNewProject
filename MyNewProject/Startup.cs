@@ -36,7 +36,9 @@ namespace MyNewProject
             services.AddScoped<IRepository<Platform>, PlatformRepository>();
             services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-
+            services.AddScoped<IMapper, Mapper>();
+            services.AddTransient<IPhotoService, PhotoService>();
+            services.AddTransient<IPhotoStorage, FileSystemPhotoStorage>();
 
             services.AddDbContext<GamestopDbContext>(options =>
             {

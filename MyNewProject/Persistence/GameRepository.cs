@@ -27,6 +27,7 @@ namespace MyNewProject.Persistence
                 .ThenInclude(gg => gg.Genre)
                 .Include(g => g.Platforms)
                 .ThenInclude(gp => gp.Platform)
+                .Include(g => g.Photos)
                 .ToListAsync();
         }
 
@@ -41,6 +42,7 @@ namespace MyNewProject.Persistence
                 .ThenInclude(gg => gg.Genre)
                 .Include(g => g.Platforms)
                 .ThenInclude(gp => gp.Platform)
+                .Include(g => g.Photos)
                 .SingleOrDefaultAsync(g => g.Id == id);
         }
 

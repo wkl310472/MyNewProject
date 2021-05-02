@@ -11,8 +11,6 @@ using MyNewProject.Core;
 using AutoMapper;
 using MyNewProject.Controllers.Resources;
 using Microsoft.Extensions.Options;
-using System.Collections.ObjectModel;
-
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,17 +21,22 @@ namespace MyNewProject.Controllers
     public class PhotosController : ControllerBase
     {
         private readonly IWebHostEnvironment host;
-        private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
         private readonly IRepository<Game> gameRepository;
         private readonly IPhotoRepository photoRepository;
+        private readonly IPhotoService photoService;
         private readonly PhotoSettings photoSettings;
 
-        public PhotosController(IWebHostEnvironment host, IUnitOfWork unitOfWork, IMapper mapper,IRepository<Game> gameRepository, IPhotoRepository photoRepository, IOptionsSnapshot<PhotoSettings> options)
+        public PhotosController(IWebHostEnvironment host, 
+            IMapper mapper,
+            IRepository<Game> gameRepository, 
+            IPhotoRepository photoRepository, 
+            IPhotoService photoService,
+            IOptionsSnapshot<PhotoSettings> options)
         {
             this.photoSettings = options.Value;
+            this.photoService = photoService;
             this.host = host;
-            this.unitOfWork = unitOfWork;
             this.mapper = mapper;
             this.gameRepository = gameRepository;
             this.photoRepository = photoRepository;
@@ -50,7 +53,6 @@ namespace MyNewProject.Controllers
             var result = mapper.Map<Photo, PhotoResource>(photo);
             return Ok(result);
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Get(int gameId)
@@ -75,14 +77,6 @@ namespace MyNewProject.Controllers
                 return BadRequest("No files uploaded.");
             }
 
-            var uploadsFolderPath = Path.Combine(host.WebRootPath, "uploads");
-            if (!Directory.Exists(uploadsFolderPath))
-            {
-                Directory.CreateDirectory(uploadsFolderPath);
-            }
-
-            var photos = new Collection<Photo>();
-
             foreach (var file in files.Files)
             {
                 if (file == null)
@@ -101,23 +95,11 @@ namespace MyNewProject.Controllers
                 {
                     return BadRequest("Invalid file type.");
                 }
-
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName).ToLower();
-                var filePath = Path.Combine(uploadsFolderPath, fileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await file.CopyToAsync(stream);
-                }
-
-                var photo = new Photo { FileName = fileName };
-
-                game.Photos.Add(photo);
-
-                photos.Add(photo);
             }
 
-            await unitOfWork.CompleteAsync();
+            var uploadsFolderPath = Path.Combine(host.WebRootPath, "uploads");
+
+            var photos = await photoService.UploadPhotos(game, files, uploadsFolderPath);
 
             var result = mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoResource>>(photos);
 
@@ -127,24 +109,19 @@ namespace MyNewProject.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int gameId, int id)
         {
-            var photoInDb = await photoRepository.GetPhoto(gameId, id);
-            if (photoInDb == null)
+            var game = await gameRepository.Get(gameId, includeRelated: true);
+
+            var photo = game.Photos.SingleOrDefault(p => p.Id == id);
+            if (photo == null)
             {
                 return NotFound();
             }
 
-            photoRepository.Remove(photoInDb);
-            await unitOfWork.CompleteAsync();
-
             var uploadsFolderPath = Path.Combine(host.WebRootPath, "uploads");
-            var filePath = Path.Combine(uploadsFolderPath, photoInDb.FileName);
-            if (!Directory.Exists(uploadsFolderPath) || !System.IO.File.Exists(filePath))
-            {
-                return Ok("The photo has already been deleted");
-            }
-            System.IO.File.Delete(filePath);
 
-            var result = mapper.Map<Photo, PhotoResource>(photoInDb);
+            await photoService.RemovePhoto(game, photo, uploadsFolderPath);
+
+            var result = mapper.Map<Photo, PhotoResource>(photo);
             return Ok(result);
         }
     }
