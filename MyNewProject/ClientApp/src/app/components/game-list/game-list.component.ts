@@ -19,8 +19,8 @@ export class GameListComponent implements OnInit {
   dataSource;
   opened: boolean;
   filter: any = {
-    genres: [],
-    platforms: []
+    genreId: [],
+    platformId: []
   };
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -31,7 +31,7 @@ export class GameListComponent implements OnInit {
   constructor(private service: GameService) { }
 
   ngOnInit() {
-    this.service.getAllGames().subscribe(games => {
+    this.service.getGames(this.filter).subscribe(games => {
       this.games = games;
       this.dataSource = new MatTableDataSource(this.games);
       this.dataSource.sort = this.sort;
@@ -47,71 +47,56 @@ export class GameListComponent implements OnInit {
     });
   }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  applySearch(searchValue: string) {
+    this.dataSource.filter = searchValue.trim().toLowerCase();
+  }
+
+  private populateGames() {
+    this.service.getGames(this.filter).subscribe(games => {
+      this.games = games;
+      this.dataSource.data = this.games;
+    });
   }
 
   onFilterChange() {
-    
-    let games = this.games;
-    if (this.filter.genres.length > 0 || this.filter.platforms.length > 0) {
-      games = games.filter(g => this.isMatch(g));
-    }
-
-    this.dataSource.data = games;
+    this.populateGames();
     this.opened = false;
   }
 
   onGenresChange(event, genreId: number) {
     if (event.checked) {
-      this.filter.genres.push(genreId);
+      this.filter.genreId.push(genreId);
     }
     else {
-      const index = this.filter.genres.indexOf(genreId);
-      this.filter.genres.splice(index, 1);
+      const index = this.filter.genreId.indexOf(genreId);
+      this.filter.genreId.splice(index, 1);
     }
   }
 
   onPlatformsChange(event, platformId: number) {
     if (event.checked) {
-      this.filter.platforms.push(platformId);
+      this.filter.platformId.push(platformId);
     }
     else {
-      const index = this.filter.platforms.indexOf(platformId);
-      this.filter.platforms.splice(index, 1);
+      const index = this.filter.platformId.indexOf(platformId);
+      this.filter.platformId.splice(index, 1);
     }
   }
 
   resetFilter() {
-    if (this.filter.genres.length > 0 || this.filter.platforms.length > 0) {
+    if (this.filter.genreId.length > 0 || this.filter.platformId.length > 0) {
+
       this.opened = true;
     }
     else {
       this.opened = false;
     }
-
     this.filter = {
-      genres: [],
-      platforms: []
+      genreId: [],
+      platformId: []
     }
-
-    this.dataSource.data = this.games;
+    this.populateGames();
   }
-
-  isMatch (game: any){
-
-    for (let genre of game.genres) {
-      for (let platform of game.platforms) {
-        if ((this.filter.genres.indexOf(genre.id) !== -1 || this.filter.genres.length === 0)
-          && (this.filter.platforms.indexOf(platform.id) !== -1 || this.filter.platforms.length === 0)) {
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }
-
 }
 
 

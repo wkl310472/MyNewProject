@@ -9,7 +9,7 @@
     <mat-checkbox class="margin-right item-block"
                   *ngFor="let genre of genres"
                   color="primary"
-                  [checked]="filter.genres.includes(genre.id)"
+                  [checked]="filter.genreId.includes(genre.id)"
                   (change)="onGenresChange($event,genre.id)">
       {{genre.name}}
     </mat-checkbox>
@@ -17,7 +17,7 @@
     <mat-checkbox class="margin-right item-block"
                   *ngFor="let platform of platforms"
                   color="primary"
-                  [checked]="filter.platforms.includes(platform.id)"
+                  [checked]="filter.platformId.includes(platform.id)"
                   (change)="onPlatformsChange($event,platform.id)">
       {{platform.name}}
     </mat-checkbox>
@@ -31,7 +31,7 @@
     <div class="container-flex flex-start">
       <button mat-button color="primary" (click)="sidenav.toggle()">Filter</button>
       <mat-form-field class="filter-search">
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+        <input matInput (keyup)="applySearch($event.target.value)" placeholder="Search">
       </mat-form-field>
       <div class="container-flex flex-end dynamic-width margin-right">
         <button mat-raised-button color="primary" type="button" [routerLink]="['/games/new']">New Game</button>
