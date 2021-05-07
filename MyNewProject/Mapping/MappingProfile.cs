@@ -23,6 +23,7 @@ namespace MyNewProject.Mapping
             CreateMap<Platform, KeyValuePairResource>();
             CreateMap<Photo, PhotoResource>();
 
+            CreateMap<FilterResource, Filter>();
             CreateMap<SaveGameResource, Game>()
                 .ForMember(g => g.Id, opt => opt.Ignore())
                 .ForMember(g => g.Genres, opt => opt.Ignore())

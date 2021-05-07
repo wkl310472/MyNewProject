@@ -29,9 +29,10 @@ namespace MyNewProject.Controllers
 
         // GET: api/<GamesController>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] FilterResource filterResource)
         {
-            var games = await gameRepository.Get();
+            var filter = mapper.Map<FilterResource, Filter>(filterResource);
+            var games = await gameRepository.Get(filter);
             var result = mapper.Map<IEnumerable<Game>, IEnumerable<GameResource>>(games);
             return Ok(result);
         }

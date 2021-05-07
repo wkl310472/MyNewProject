@@ -16,19 +16,58 @@ namespace MyNewProject.Persistence
             this.context = context;
         }
 
-        public async Task<IEnumerable<Game>> Get(bool includeRelated = true)
+        public async Task<IEnumerable<Game>> Get(Filter filter,bool includeRelated = true)
         {
+            List<Game> games;
             if (!includeRelated)
             {
-                return await context.Games.ToListAsync();
+                games = await context.Games.ToListAsync();
             }
-            return await context.Games
+            else
+            {
+                games = await context.Games
                 .Include(g => g.Genres)
                 .ThenInclude(gg => gg.Genre)
                 .Include(g => g.Platforms)
                 .ThenInclude(gp => gp.Platform)
                 .Include(g => g.Photos)
                 .ToListAsync();
+            }
+
+            if (filter != null)
+            {
+                games = games.Where(g => applyFilter(g,filter)).ToList();
+            }
+
+            return games; 
+        }
+
+        private bool applyFilter(Game game, Filter filter)
+        {
+            if (filter.GenreId.Count() > 0)
+            {
+                foreach (var genreId in filter.GenreId)
+                {
+                    if (!game.Genres.Select(g => g.GenreId).Contains(genreId))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            if (filter.PlatformId.Count() > 0)
+            {
+                foreach (var platformId in filter.PlatformId)
+                {
+                    if (!game.Platforms.Select(g => g.PlatformId).Contains(platformId))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+
+            return true;
         }
 
         public async Task<Game> Get(int id, bool includeRelated = true)

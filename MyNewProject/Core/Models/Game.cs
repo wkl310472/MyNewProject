@@ -33,5 +33,19 @@ namespace MyNewProject.Core.Models
             Platforms = new Collection<GamePlatform>();
             Photos = new Collection<Photo>();
         }
+
+        public override string ToString()
+        {
+            string result = "";
+            result += this.Name;
+            result += " ";
+
+            var genres = Genres.Select(g => g.GenreId.ToString()).ToList();
+            result += "[" + String.Join(",", genres) + "]" + " ";
+            var platforms = Platforms.Select(p => p.PlatformId.ToString()).ToList();
+            result += "[" + String.Join(",", platforms) + "]";
+
+            return result;
+        }
     }
 }
