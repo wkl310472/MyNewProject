@@ -44,6 +44,18 @@
     <Compile Remove="Migrations\20210418190953_setGameClassPropertyReleaseToNullable.Designer.cs" />
     <Compile Remove="Migrations\20210430072052_addPhotoModel.cs" />
     <Compile Remove="Migrations\20210430072052_addPhotoModel.Designer.cs" />
+    <Compile Remove="Migrations\20210519082303_addUserModel.cs" />
+    <Compile Remove="Migrations\20210519082303_addUserModel.Designer.cs" />
+    <Compile Remove="Migrations\20210519085558_addUserModel.cs" />
+    <Compile Remove="Migrations\20210519085558_addUserModel.Designer.cs" />
+    <Compile Remove="Migrations\20210519085840_addUserModel.cs" />
+    <Compile Remove="Migrations\20210519085840_addUserModel.Designer.cs" />
+    <Compile Remove="Migrations\20210519090231_addUserModel.cs" />
+    <Compile Remove="Migrations\20210519090231_addUserModel.Designer.cs" />
+    <Compile Remove="Migrations\20210519091615_addUserModel.cs" />
+    <Compile Remove="Migrations\20210519091615_addUserModel.Designer.cs" />
+    <Compile Remove="Migrations\20210519132411_updateUserLevelsTable.cs" />
+    <Compile Remove="Migrations\20210519132411_updateUserLevelsTable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

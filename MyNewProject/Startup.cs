@@ -35,6 +35,7 @@ namespace MyNewProject
             services.AddScoped<IRepository<Genre>, GenreRepository>();
             services.AddScoped<IRepository<Platform>, PlatformRepository>();
             services.AddScoped<IPhotoRepository, PhotoRepository>();
+            services.AddScoped<IRepository<User>, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IMapper, Mapper>();
             services.AddTransient<IPhotoService, PhotoService>();

@@ -22,6 +22,11 @@ namespace MyNewProject.Mapping
             CreateMap<Genre, KeyValuePairResource>();
             CreateMap<Platform, KeyValuePairResource>();
             CreateMap<Photo, PhotoResource>();
+            CreateMap<User, SaveUserResource>()
+                .ForMember(ur => ur.UserLevel, opt => opt.MapFrom(u => u.UserLevel.Level));
+            CreateMap<User, UserResource>()
+                .ForMember(ur => ur.UserLevel, opt => opt.MapFrom(u => u.UserLevel.Description));
+
 
             CreateMap<FilterResource, Filter>();
             CreateMap<SaveGameResource, Game>()
@@ -69,7 +74,10 @@ namespace MyNewProject.Mapping
             CreateMap<KeyValuePairResource, Platform>()
                 .ForMember(p => p.Id, opt => opt.Ignore());
             CreateMap<PhotoResource, Photo>();
-
+            CreateMap<SaveUserResource, User>()
+                .ForMember(u => u.Id, opt => opt.Ignore())
+                .ForMember(u => u.Level, opt => opt.MapFrom(ur => ur.UserLevel))
+                .ForMember(u => u.UserLevel, opt => opt.Ignore());
         }
     }
 }
