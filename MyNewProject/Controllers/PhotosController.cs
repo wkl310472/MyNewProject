@@ -11,6 +11,7 @@ using MyNewProject.Core;
 using AutoMapper;
 using MyNewProject.Controllers.Resources;
 using Microsoft.Extensions.Options;
+using MyNewProject.Configuration;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

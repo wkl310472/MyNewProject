@@ -10,6 +10,10 @@ using MyNewProject.Persistence;
 using AutoMapper;
 using MyNewProject.Core;
 using MyNewProject.Core.Models;
+using MyNewProject.Configuration;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace MyNewProject
 {
@@ -25,8 +29,29 @@ namespace MyNewProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<PhotoSettings>(Configuration.GetSection("PhotoSettings"));
+            services.AddCors(options => options.AddPolicy("CorsPolicy",
+                builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials().Build()));
 
+
+            services.Configure<PhotoSettings>(Configuration.GetSection("PhotoSettings"));
+            services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options => 
+                {
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = Configuration["JwtConfig:Issuer"],
+                        ValidateAudience = true,
+                        ValidAudience = Configuration["JwtConfig:Issuer"],
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtConfig:Key"])),
+                        ValidateLifetime = true
+                    };
+                });
+            
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
             services.AddAutoMapper(typeof(Startup));
@@ -35,7 +60,7 @@ namespace MyNewProject
             services.AddScoped<IRepository<Genre>, GenreRepository>();
             services.AddScoped<IRepository<Platform>, PlatformRepository>();
             services.AddScoped<IPhotoRepository, PhotoRepository>();
-            services.AddScoped<IRepository<User>, UserRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IMapper, Mapper>();
             services.AddTransient<IPhotoService, PhotoService>();
@@ -74,6 +99,9 @@ namespace MyNewProject
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

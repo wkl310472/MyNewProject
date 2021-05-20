@@ -32,6 +32,7 @@ namespace MyNewProject.Persistence
             modelBuilder.Entity<User>().HasOne(u => u.UserLevel).WithMany(l => l.Users).HasForeignKey(u => u.Level).HasPrincipalKey(l => l.Level);
             modelBuilder.Entity<User>().Property(u => u.Money).HasDefaultValue(0.0);
             modelBuilder.Entity<User>().Property(u => u.Level).HasDefaultValue(4);
+            modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
         }
     }
 }

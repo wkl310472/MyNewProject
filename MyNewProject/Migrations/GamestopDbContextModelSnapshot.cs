@@ -160,6 +160,9 @@ namespace MyNewProject.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.HasIndex("Level");
 
                     b.ToTable("Users");
