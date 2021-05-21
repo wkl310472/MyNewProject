@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { endpoints } from './shared';
 
 @Injectable({
   providedIn: 'root'
@@ -15,14 +16,14 @@ export class PhotoService {
       formData.append('file', photo);
     }
 
-    return this.http.post('/api/games/' + gameId + '/photos', formData);
+    return this.http.post(endpoints['games'] + '/' + gameId + '/photos', formData);
   }
 
   getPhotos(gameId) {
-    return this.http.get('/api/games/' + gameId + '/photos');
+    return this.http.get(endpoints['games'] + '/' + gameId + '/photos');
   }
 
   delete(gameId, id) {
-    return this.http.delete('/api/games/' + gameId + '/photos/' + id);
+    return this.http.delete(endpoints['games'] + '/' + gameId + '/photos/' + id);
   }
 }

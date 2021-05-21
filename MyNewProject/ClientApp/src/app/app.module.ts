@@ -31,10 +31,13 @@ import { GameFormComponent } from './components/game-form/game-form.component';
 import { GameInfoComponent } from './components/game-info/game-info.component';
 import { GameListComponent } from './components/game-list/game-list.component';
 
+import { AuthService } from './services/auth.service';
 import { GameService } from './services/game.service';
 import { PhotoService } from './services/photo.service';
 
 import { AppErrorHandler } from './app.error-handler';
+import { LoginComponent } from './components/login/login.component';
+
 
 
 @NgModule({
@@ -46,7 +49,8 @@ import { AppErrorHandler } from './app.error-handler';
     FetchDataComponent,
     GameInfoComponent,
     GameFormComponent,
-    GameListComponent
+    GameListComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -77,6 +81,8 @@ import { AppErrorHandler } from './app.error-handler';
       { path: 'games/new', component: GameFormComponent },
       { path: 'games/edit/:id', component: GameFormComponent },
       { path: 'games/info/:id', component: GameInfoComponent },
+      { path: 'users/login', component: LoginComponent },
+      { path: 'users/register', component: LoginComponent },
       { path: '**', redirectTo: '' },
     ]),
     ToastrModule.forRoot()
@@ -85,7 +91,8 @@ import { AppErrorHandler } from './app.error-handler';
     { provide: ErrorHandler, useClass: AppErrorHandler },
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
     GameService,
-    PhotoService
+    PhotoService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
