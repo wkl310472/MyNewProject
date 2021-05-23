@@ -8,6 +8,10 @@ import { Component } from '@angular/core';
 export class NavMenuComponent {
   isExpanded = false;
 
+  loginExpanded = false;
+
+  isLoggedIn: boolean;
+
   collapse() {
     this.isExpanded = false;
   }
@@ -15,4 +19,13 @@ export class NavMenuComponent {
   toggle() {
     this.isExpanded = !this.isExpanded;
   }
+
+  toggleLogin() {
+    this.loginExpanded = !this.loginExpanded;
+  }
+
+  changeLoginStatus() {
+    this.isLoggedIn = !this.isLoggedIn;
+  }
+
 }
