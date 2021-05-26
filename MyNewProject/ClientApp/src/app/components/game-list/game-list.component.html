@@ -65,7 +65,7 @@
                   [routerLink]="['/games/edit',game.id]"
                   matTooltip="Edit"
                   [matTooltipShowDelay]="tooltipShowDelay.value">
-              <mat-icon>edit</mat-icon>
+            <mat-icon>edit</mat-icon>
           </button>
         </td>
       </ng-container>
@@ -73,7 +73,23 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+
+    <div class="container-flex flex-end">
+      <div class="fill-horizontal"></div>
+      <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons (page)="updatePageNumbers($event)"></mat-paginator>
+      <!-- Created by Sameer Khan -->
+      <div class="go-to-container">
+        <div class="go-to-label">Go To: </div>
+        <mat-form-field>
+          <mat-select [(ngModel)]="pageNumber" (selectionChange)="goToPage($event)">
+            <mat-option *ngFor="let pageNumber of pageNumbers" [value]="pageNumber">{{pageNumber}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!-- Created by Sameer Khan -->
+    </div>
+
+
   </mat-sidenav-content>
 </mat-sidenav-container>
 

@@ -30,6 +30,40 @@ table {
   margin-top: 0.5rem;
 }
 
+.go-to-container {
+  display: flex;
+  align-items: baseline;
+  background: white;
+}
+
+.fill-horizontal{
+    background:white;
+    flex-grow:1;
+}
+
+.fill-vertical {
+  background: white;
+  flex-grow: 1;
+}
+
+.flex-column{
+    flex-direction:column;
+}
+
+.go-to-container .mat-form-field {
+  width: 56px;
+  margin: 6px 4px 0 4px;
+  font-size: 12px;
+}
+
+.go-to-container .go-to-label {
+  margin: 0 4px;
+  font-size: 12px;
+  color: rgba(0,0,0,.54);
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
 @media screen and (min-width: 768px) {
   .filter-search {
     margin: 0 2rem;

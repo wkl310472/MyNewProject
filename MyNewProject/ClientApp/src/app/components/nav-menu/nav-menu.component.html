@@ -29,17 +29,15 @@
             <a class="nav-link text-dark" [routerLink]="['/games']">Games</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a *ngIf="!isLoggedIn" class="nav-link text-dark" (click)="toggleLogin($event)" [routerLink]>Login</a>
-            <a *ngIf="isLoggedIn" class="nav-link text-dark" (click)="changeLoginStatus($event)" [routerLink]>Logout</a>
+            <a *ngIf="!(isLoggedIn | async)" class="nav-link text-dark" (click)="showLoginPage()" [routerLink]>Login</a>
+            <a *ngIf="(isLoggedIn | async)" class="nav-link text-dark" (click)="logout()" [routerLink]>Logout</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 </header>
-<app-login [isExpanded]="loginExpanded"
-           [isAuthenticated]="isLoggedIn"
-           (onLoginClose)="toggleLogin($event)"
-           (onAuthenticationSuccess)="changeLoginStatus($event)"
-           ></app-login>
+<app-login></app-login>
+
+<app-loading-spinner *ngIf="isLoading | async"></app-loading-spinner>
 

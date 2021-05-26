@@ -63,12 +63,34 @@
     <None Remove="ClientApp\src\app\app.error-handler.ts" />
     <None Remove="ClientApp\src\app\models\game.ts" />
     <None Remove="ClientApp\src\app\services\shared.ts" />
+    <None Remove="ClientApp\src\app\store\app.store.ts" />
+    <None Remove="ClientApp\src\app\store\auth\auth.store.ts" />
+    <None Remove="ClientApp\src\app\store\entities\cart.store.ts" />
+    <None Remove="ClientApp\src\app\store\entities\entities.store.ts" />
+    <None Remove="ClientApp\src\app\store\entities\games.store.ts" />
+    <None Remove="ClientApp\src\app\store\entities\genres.store.ts" />
+    <None Remove="ClientApp\src\app\store\entities\platforms.store.ts" />
+    <None Remove="ClientApp\src\app\store\error\error.store.ts" />
+    <None Remove="ClientApp\src\app\store\ui\ui.store.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\app.error-handler.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\game.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\shared.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\store\app.store.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\store\auth\auth.store.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\store\entities\cart.store.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\store\entities\entities.store.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\store\entities\games.store.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\store\entities\genres.store.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\store\entities\platforms.store.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\store\error\error.store.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\store\ui\ui.store.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\src\app\components\shared\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

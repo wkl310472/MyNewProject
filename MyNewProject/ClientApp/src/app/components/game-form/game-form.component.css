@@ -21,4 +21,8 @@ img {
   .container-flex.flex-between button {
     margin-right:3.5rem;
   }
+
+  .flex-between {
+    justify-content: flex-start;
+  }
 }

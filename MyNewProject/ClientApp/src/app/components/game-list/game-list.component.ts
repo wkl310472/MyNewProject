@@ -28,6 +28,10 @@ export class GameListComponent implements OnInit {
 
   tooltipShowDelay = new FormControl(500);
 
+  pageNumber: number;
+  pageNumbers: number[];
+
+
   constructor(private service: GameService) { }
 
   ngOnInit() {
@@ -36,6 +40,8 @@ export class GameListComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.games);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+      this.paginator.length = this.dataSource.data.length;
+      this.updatePageNumbers();
     });
 
     this.service.getGenres().subscribe(genres => {
@@ -45,6 +51,7 @@ export class GameListComponent implements OnInit {
     this.service.getPlatforms().subscribe(platforms => {
       this.platforms = platforms;
     });
+
   }
 
   applySearch(searchValue: string) {
@@ -97,6 +104,24 @@ export class GameListComponent implements OnInit {
     }
     this.populateGames();
   }
+
+  goToPage() {
+    this.paginator.pageIndex = this.pageNumber - 1;
+    this.paginator.page.next({
+      length: this.paginator.length,
+      pageIndex: this.paginator.pageIndex,
+      pageSize: this.paginator.pageSize
+    });
+  }
+
+  updatePageNumbers() {
+    this.pageNumber = (this.paginator.pageIndex || 0) + 1;
+    this.pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(this.paginator.length / this.paginator.pageSize); i++) {
+      this.pageNumbers.push(i);
+    }
+  }
+
 }
 
 
