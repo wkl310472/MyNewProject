@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IAppState } from '../../store/app.store';
 import { loggedOut, selectIsAuthenticated } from '../../store/auth/auth.store';
-import { selectLoading, selectshowLoginPage, loginPageActivated } from '../../store/ui/ui.store';
+import { selectshowLoginPage, loginPageActivated } from '../../store/ui/ui.store';
 
 @Component({
   selector: 'app-nav-menu',
@@ -11,8 +11,6 @@ import { selectLoading, selectshowLoginPage, loginPageActivated } from '../../st
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent implements OnInit {
-
-  isLoading: Observable<boolean>;
 
   loginExpanded : Observable<boolean>;
 
@@ -23,7 +21,6 @@ export class NavMenuComponent implements OnInit {
   constructor(private store: Store<IAppState>) { }
 
   ngOnInit() {
-    this.isLoading = this.store.select(selectLoading);
     this.loginExpanded = this.store.select(selectshowLoginPage);
     this.isLoggedIn = this.store.select(selectIsAuthenticated);
   }
@@ -41,7 +38,6 @@ export class NavMenuComponent implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem('token');
     this.store.dispatch(loggedOut());
   }
 
