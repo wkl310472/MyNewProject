@@ -2,34 +2,34 @@
 <h1>Games</h1>
 
 
-<mat-sidenav-container>
+<mat-sidenav-container class="min-height-48">
 
-  <mat-sidenav #sidenav mode="side" [(opened)]="opened" class="filter-nav">
+  <mat-sidenav #sidenav mode="side" [opened]="showFilter$|async" class="filter-nav">
     <p>Genres</p>
     <mat-checkbox class="margin-right item-block"
-                  *ngFor="let genre of genres"
+                  *ngFor="let genre of (genres$ | async)"
                   color="primary"
-                  [checked]="filter.genreId.includes(genre.id)"
+                  [checked]="(filter$ | async).genreId.includes(genre.id)"
                   (change)="onGenresChange($event,genre.id)">
       {{genre.name}}
     </mat-checkbox>
     <p>Platforms</p>
     <mat-checkbox class="margin-right item-block"
-                  *ngFor="let platform of platforms"
+                  *ngFor="let platform of (platforms$ | async)"
                   color="primary"
-                  [checked]="filter.platformId.includes(platform.id)"
+                  [checked]="(filter$ | async).platformId.includes(platform.id)"
                   (change)="onPlatformsChange($event,platform.id)">
       {{platform.name}}
     </mat-checkbox>
     <div class="container-flex">
-      <button mat-raised-button color="primary" (click)="onFilterChange()" type="button" class="item-block">Confirm</button>
+      <button mat-raised-button color="primary" (click)="confirmFilter()" type="button" class="item-block">Confirm</button>
       <button mat-raised-button color="primary" (click)="resetFilter()" type="reset" class="item-block">Reset</button>
     </div>
   </mat-sidenav>
 
   <mat-sidenav-content>
     <div class="container-flex flex-start">
-      <button mat-button color="primary" (click)="sidenav.toggle()">Filter</button>
+      <button mat-button color="primary" (click)="toggleFilter(sidenav)">Filter</button>
       <mat-form-field class="filter-search">
         <input matInput (keyup)="applySearch($event.target.value)" placeholder="Search">
       </mat-form-field>
@@ -76,12 +76,12 @@
 
     <div class="container-flex flex-end">
       <div class="fill-horizontal"></div>
-      <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons (page)="updatePageNumbers($event)"></mat-paginator>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]" showFirstLastButtons (page)="updatePageNumbers($event)"></mat-paginator>
       <!-- Created by Sameer Khan -->
       <div class="go-to-container">
         <div class="go-to-label">Go To: </div>
         <mat-form-field>
-          <mat-select [(ngModel)]="pageNumber" (selectionChange)="goToPage($event)">
+          <mat-select [(ngModel)]="currentPage" (selectionChange)="goToPage($event)">
             <mat-option *ngFor="let pageNumber of pageNumbers" [value]="pageNumber">{{pageNumber}}</mat-option>
           </mat-select>
         </mat-form-field>

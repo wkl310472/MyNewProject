@@ -70,6 +70,7 @@
     <None Remove="ClientApp\src\app\store\entities\games.store.ts" />
     <None Remove="ClientApp\src\app\store\entities\genres.store.ts" />
     <None Remove="ClientApp\src\app\store\entities\platforms.store.ts" />
+    <None Remove="ClientApp\src\app\store\entities\shared.ts" />
     <None Remove="ClientApp\src\app\store\error\error.store.ts" />
     <None Remove="ClientApp\src\app\store\ui\ui.store.ts" />
   </ItemGroup>
@@ -85,6 +86,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\store\entities\games.store.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\store\entities\genres.store.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\store\entities\platforms.store.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\store\entities\shared.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\store\error\error.store.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\store\ui\ui.store.ts" />
   </ItemGroup>

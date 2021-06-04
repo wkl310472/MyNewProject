@@ -63,6 +63,10 @@ table {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.min-height-48 {
+  min-height: 48rem !important;
+}
+
 
 @media screen and (min-width: 768px) {
   .filter-search {

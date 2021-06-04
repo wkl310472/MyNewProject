@@ -46,6 +46,9 @@ import { LoginComponent } from './components/login/login.component';
 import { environment } from '../environments/environment.prod';
 import { appReducer } from './store/app.store';
 import { AuthEffects } from './store/auth/auth.store';
+import { GameEffects, gameReducer } from './store/entities/games.store';
+import { GenreEffects } from './store/entities/genres.store';
+import { PlatformEffects } from './store/entities/platforms.store';
 
 
 
@@ -67,7 +70,7 @@ import { AuthEffects } from './store/auth/auth.store';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     BrowserAnimationsModule,
     CommonModule,
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, GameEffects, GenreEffects, PlatformEffects]),
     HttpClientModule,
     FormsModule,
     MatButtonModule,

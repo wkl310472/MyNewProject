@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IAppState } from '../../store/app.store';
 import { loggedOut, selectIsAuthenticated } from '../../store/auth/auth.store';
-import { selectshowLoginPage, loginPageActivated } from '../../store/ui/ui.store';
+import { selectShowLogin, loginPageActivated } from '../../store/ui/ui.store';
 
 @Component({
   selector: 'app-nav-menu',
@@ -21,7 +21,7 @@ export class NavMenuComponent implements OnInit {
   constructor(private store: Store<IAppState>) { }
 
   ngOnInit() {
-    this.loginExpanded = this.store.select(selectshowLoginPage);
+    this.loginExpanded = this.store.select(selectShowLogin);
     this.isLoggedIn = this.store.select(selectIsAuthenticated);
   }
 
