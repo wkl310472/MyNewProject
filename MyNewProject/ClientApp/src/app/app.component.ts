@@ -12,12 +12,12 @@ import { selectLoading } from './store/ui/ui.store';
 export class AppComponent implements OnInit {
   title = 'app';
 
-  isLoading: Observable<boolean>;
+  isLoading$: Observable<boolean>;
 
   constructor(private store: Store<IAppState>) { }
 
   ngOnInit() {
-    this.isLoading = this.store.select(selectLoading);
+    this.isLoading$ = this.store.select(selectLoading);
     this.store.dispatch(autoLoginStarted());
   }
 }

@@ -3,6 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { GameService } from '../../services/game.service';
 import { ToastrService } from 'ngx-toastr';
 import { PhotoService } from '../../services/photo.service';
+import { IAppState } from '../../store/app.store';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { IGame, selectGame } from '../../store/entities/games.store';
 
 @Component({
   selector: 'app-game-form',
@@ -11,6 +15,7 @@ import { PhotoService } from '../../services/photo.service';
 })
 export class GameFormComponent implements OnInit {
 
+  game$: Observable<IGame>;
   game: any = {
     genres: [],
     platforms: []
@@ -25,7 +30,8 @@ export class GameFormComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private service: GameService,
     private photoService: PhotoService,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private store: Store<IAppState>) {
     this.route.params.subscribe(params => {
       this.game.id = params['id'] ? +params['id'] : NaN;
     });

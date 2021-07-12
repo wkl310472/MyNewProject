@@ -4,7 +4,7 @@
 
 <mat-sidenav-container class="min-height-48">
 
-  <mat-sidenav #sidenav mode="side" [opened]="showFilter$|async" class="filter-nav">
+  <mat-sidenav #sidenav mode="side" [opened]="(showFilter$ | async)" class="filter-nav">
     <p>Genres</p>
     <mat-checkbox class="margin-right item-block"
                   *ngFor="let genre of (genres$ | async)"
@@ -28,6 +28,8 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
+
+
     <div class="container-flex flex-start">
       <button mat-button color="primary" (click)="toggleFilter(sidenav)">Filter</button>
       <mat-form-field class="filter-search">
@@ -38,7 +40,7 @@
       </div>
     </div>
 
-    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <table mat-table [dataSource]="(dataSource)" matSort class="mat-elevation-z8">
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
         <td mat-cell *matCellDef="let game">
@@ -76,17 +78,20 @@
 
     <div class="container-flex flex-end">
       <div class="fill-horizontal"></div>
-      <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]" showFirstLastButtons (page)="updatePageNumbers($event)"></mat-paginator>
-      <!-- Created by Sameer Khan -->
+      <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]"
+                     [pageSize]="(pagination$ | async).pageSize"
+                     [pageIndex]="(pagination$ | async).pageIndex"
+                     [length]="(games$ | async).length"
+                     showFirstLastButtons
+                     (page)="updatePageNumbers($event)" #p></mat-paginator>
       <div class="go-to-container">
         <div class="go-to-label">Go To: </div>
         <mat-form-field>
-          <mat-select [(ngModel)]="currentPage" (selectionChange)="goToPage($event)">
-            <mat-option *ngFor="let pageNumber of pageNumbers" [value]="pageNumber">{{pageNumber}}</mat-option>
+          <mat-select [value]="(pagination$ | async).pageIndex + 1" (selectionChange)="goToPage($event)">
+            <mat-option *ngFor="let pageNumber of (pageNumbers$ | async)" [value]="pageNumber">{{pageNumber}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
-      <!-- Created by Sameer Khan -->
     </div>
 
 

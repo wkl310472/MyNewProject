@@ -1,45 +1,45 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormControl } from '@angular/forms';
 import { State, Store } from '@ngrx/store';
 import { IAppState } from '../../store/app.store';
-import { filterReset, filterSideNavClosed, filterSideNavOpened, genreFilterAdded, genreFilterRemoved, IFilter, loadingStarted, platformFilterAdded, platformFilterRemoved, selectFilter, selectShowFilter, selectPagination, IPagination, paginationChanged } from '../../store/ui/ui.store';
+import { filterReset, filterSideNavClosed, filterSideNavOpened, genreFilterAdded, genreFilterRemoved, IFilter, loadingStarted, platformFilterAdded, platformFilterRemoved, selectFilter, selectShowFilter, selectPagination, IPagination, paginationChanged, selectLoading } from '../../store/ui/ui.store';
 import { Observable, Subscription } from 'rxjs';
 import { gamesLoadingStarted, IGame, selectGameList } from '../../store/entities/games.store';
 import { genresLoadingStarted, selectGenreList } from '../../store/entities/genres.store';
 import { platformsLoadingStarted, selectPlatformList } from '../../store/entities/platforms.store';
 import { IKeyValuePair } from '../../store/entities/shared';
-import { take } from 'rxjs/operators';
+import { switchMap, take,map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-game-list',
   templateUrl: './game-list.component.html',
   styleUrls: ['./game-list.component.css']
 })
-export class GameListComponent implements OnInit, OnDestroy {
+export class GameListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   games$: Observable<IGame[]>;
   genres$: Observable<IKeyValuePair[]>;
   platforms$: Observable<IKeyValuePair[]>;
   displayedColumns: string[] = ['name', 'developer', 'release', 'action'];
-  dataSource = new MatTableDataSource<IGame>();
+  dataSource$: Observable<MatTableDataSource<IGame>>;
+  dataSource: MatTableDataSource<IGame>;
   showFilter$: Observable<boolean>;
   filter$: Observable<IFilter>;
   pagination$: Observable<IPagination>;
+  pageNumbers$: Observable<number[]>;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   tooltipShowDelay = new FormControl(500);
 
-  currentPage: number;
-  pageNumbers: number[];
+  
 
-  private gamesSubscription: Subscription;
   private filterSubscription: Subscription;
-  private paginationSubscription: Subscription;
+  private gamesSubscription: Subscription;
 
   constructor(private store: Store<IAppState>) { }
 
@@ -51,31 +51,48 @@ export class GameListComponent implements OnInit, OnDestroy {
     this.showFilter$ = this.store.select(selectShowFilter);
     this.pagination$ = this.store.select(selectPagination);
 
+    this.dataSource = new MatTableDataSource<IGame>();
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+
+    setTimeout(() => { this.store.dispatch(loadingStarted()); });
+
     this.store.dispatch(genresLoadingStarted());
     this.store.dispatch(platformsLoadingStarted());
 
-    this.filterSubscription = this.filter$.subscribe((filter) => {    
+    
+
+    this.filterSubscription = this.filter$.subscribe((filter) => {
       this.store.dispatch(gamesLoadingStarted({ payload: filter }));
     });
 
-    this.gamesSubscription = this.games$.subscribe((data) => {
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-      this.paginator.length = data.length;
-      this.dataSource.data = data;
+    this.gamesSubscription = this.games$.subscribe((games) => {
+      this.dataSource.data = games;
+    });
 
-      this.paginationSubscription = this.pagination$.pipe(take(1)).subscribe((pagination) => {
-        console.log(pagination);
-        this.updatePageNumbers(pagination);
-        this.goToPage({ value: pagination.currentPage });
+    this.pageNumbers$ = this.games$.pipe(switchMap(games => {
+      return this.pagination$.pipe(map(pagination => {
+        const pageNumbers = [];
+        for (let i = 1; i <= Math.ceil(games.length / pagination.pageSize); i++) {
+          pageNumbers.push(i);
+        }
+        return pageNumbers;
+      }));
+    }));
+  }
+
+  ngAfterViewInit() {
+
+    setTimeout(() => {
+      this.pagination$.pipe(take(1)).subscribe(pagination => {
+        this.goToPage({ value: pagination.pageIndex + 1 });
       });
     });
   }
 
   ngOnDestroy() {
-    this.gamesSubscription.unsubscribe();
     this.filterSubscription.unsubscribe();
-    this.paginationSubscription.unsubscribe();
+    this.gamesSubscription.unsubscribe();
   }
 
   applySearch(searchValue: string) {
@@ -93,6 +110,7 @@ export class GameListComponent implements OnInit, OnDestroy {
     else {
       this.store.dispatch(genreFilterRemoved({ payload: genreId }));
     }
+    this.goToPage({ value: 1 });
   }
 
   onPlatformsChange(event, platformId: number) {
@@ -102,6 +120,7 @@ export class GameListComponent implements OnInit, OnDestroy {
     else {
       this.store.dispatch(platformFilterRemoved({ payload: platformId }));
     }
+    this.goToPage({ value: 1 });
   }
 
   toggleFilter(sidenav) {
@@ -127,19 +146,7 @@ export class GameListComponent implements OnInit, OnDestroy {
   }
 
   updatePageNumbers(event) {
-
-    this.currentPage = event.pageIndex !== undefined ? event.pageIndex + 1 : event.currentPage;
-
-    this.store.dispatch(paginationChanged({ payload: { currentPage: this.currentPage, pageSize: event.pageSize } }));
-
-    this.paginator.pageSize = event.pageSize;
-
-    this.paginator.pageIndex = this.currentPage - 1;
-
-    this.pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(this.paginator.length / this.paginator.pageSize); i++) {
-      this.pageNumbers.push(i);
-    }
+    this.store.dispatch(paginationChanged({ payload: { length: event.length, pageSize: event.pageSize, pageIndex: event.pageIndex } }));
   }
 
 }
