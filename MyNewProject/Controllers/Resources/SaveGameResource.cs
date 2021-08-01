@@ -25,6 +25,11 @@ namespace MyNewProject.Controllers.Resources
         public virtual ICollection<int> Genres { get; set; }
         public virtual ICollection<int> Platforms { get; set; }
 
+        [Range(0.0,999.99)]
+        public virtual double Price { get; set; }
+        [Range(0,99)]
+        public virtual int NumberInStock { get; set; }
+
         public SaveGameResource()
         {
             Genres = new Collection<int>();

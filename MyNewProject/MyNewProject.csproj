@@ -57,6 +57,10 @@
     <Compile Remove="Migrations\20210519091615_addUserModel.Designer.cs" />
     <Compile Remove="Migrations\20210519132411_updateUserLevelsTable.cs" />
     <Compile Remove="Migrations\20210519132411_updateUserLevelsTable.Designer.cs" />
+    <Compile Remove="Migrations\20210730130832_addPriceAndNumberInStockColumnInGameTable.cs" />
+    <Compile Remove="Migrations\20210730130832_addPriceAndNumberInStockColumnInGameTable.Designer.cs" />
+    <Compile Remove="Migrations\20210730132201_addPriceAndNumberInStockColumnInGameTable.cs" />
+    <Compile Remove="Migrations\20210730132201_addPriceAndNumberInStockColumnInGameTable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

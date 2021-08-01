@@ -19,6 +19,8 @@ namespace MyNewProject.Controllers.Resources
 
         public virtual ICollection<KeyValuePairResource> Genres { get; set; }
         public virtual ICollection<KeyValuePairResource> Platforms { get; set; }
+        public virtual double Price { get; set; }
+        public virtual int NumberInStock { get; set; }
 
         public GameResource()
         {

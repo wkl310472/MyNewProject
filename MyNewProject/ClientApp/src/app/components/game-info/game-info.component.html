@@ -28,15 +28,24 @@
         <mat-divider></mat-divider>
         <mat-list-item>
           <h4 mat-line>Genres</h4>
-          <p mat-line>
+          <p mat-line class="auto-line-break">
             <span *ngFor="let genre of game.genres">{{genre.name}}&nbsp;&nbsp;</span>
           </p>
         </mat-list-item>
         <mat-list-item>
           <h4 mat-line>Platforms</h4>
-          <p mat-line>
+          <p mat-line class="auto-line-break">
             <span *ngFor="let platform of game.platforms">{{platform.name}}&nbsp;&nbsp;</span>
           </p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <h4 mat-line>Price</h4>
+          <p mat-line> {{game.price}} </p>
+        </mat-list-item>
+        <mat-list-item>
+          <h4 mat-line>Number In Stock</h4>
+          <p mat-line> {{game.numberInStock}} </p>
         </mat-list-item>
       </mat-list>
     </ng-template>

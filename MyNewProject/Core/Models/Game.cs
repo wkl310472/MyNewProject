@@ -26,6 +26,8 @@ namespace MyNewProject.Core.Models
         public virtual ICollection<GameGenre> Genres { get; set; }
         public virtual ICollection<GamePlatform> Platforms { get; set; }
         public virtual ICollection<Photo> Photos { get; set; }
+        public virtual double Price { get; set; }
+        public virtual int NumberInStock { get; set; }
 
         public Game()
         {

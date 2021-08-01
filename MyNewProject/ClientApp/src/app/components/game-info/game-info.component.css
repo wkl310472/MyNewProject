@@ -10,3 +10,10 @@ img{
     margin:0.5rem 0;
 }
 
+.auto-line-break {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+

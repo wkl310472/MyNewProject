@@ -11,44 +11,32 @@
       Game-Info
     </ng-template>
     <ng-template matTabContent>
-      <form #g="ngForm" (ngSubmit)="submit()">
+      <form #g="ngForm" [formGroup]="form" (ngSubmit)="submit()">
         <mat-form-field class="dynamic-width margin-top">
           <input [(ngModel)]="game.name"
-                 name="name"
+                 formControlName="name"
                  matInput
-                 placeholder="Name"
-                 required
-                 minlength="2"
-                 maxlength="255"
-                 #gameName="ngModel">
+                 placeholder="Name" />
           <mat-error *ngIf="gameName.invalid && gameName.errors.minlength">Name should be at least {{gameName.errors.minlength.requiredLength}} characters</mat-error>
         </mat-form-field>
 
         <mat-form-field class="dynamic-width">
           <input [(ngModel)]="game.developer"
-                 name="developer"
+                 formControlName="developer"
                  matInput
-                 placeholder="Developer"
-                 required
-                 minlength="2"
-                 maxlength="255"
-                 #gameDeveloper="ngModel">
+                 placeholder="Developer" />
           <mat-error *ngIf="gameDeveloper.invalid && gameDeveloper.errors.minlength">Developer should be at least {{gameDeveloper.errors.minlength.requiredLength}} characters</mat-error>
-
         </mat-form-field>
 
         <mat-form-field class="dynamic-width">
           <input [(ngModel)]="game.release"
-                 name="release"
+                 formControlName="release"
                  matInput
                  [matDatepicker]="picker"
-                 placeholder="Release Date"
-                 required
-                 #gameRelease="ngModel">
+                 placeholder="Release Date" />
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker color="primary"></mat-datepicker>
         </mat-form-field>
-
 
         <h2 class="label-small">Genres</h2>
 
@@ -70,13 +58,33 @@
           </mat-checkbox>
         </section>
 
+        <mat-form-field class="dynamic-width">
+          <input [(ngModel)]="game.price"
+                 formControlName="price"
+                 matInput
+                 placeholder="Price"
+                 type="number"/>
+          <mat-error *ngIf="gamePrice.invalid && gamePrice.errors.min">Price should be at least  {{gamePrice.errors.min.min}}</mat-error>
+          <mat-error *ngIf="gamePrice.invalid && gamePrice.errors.max">Price should be at most {{gamePrice.errors.max.max}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="dynamic-width">
+          <input [(ngModel)]="game.numberInStock"
+                 formControlName="numberInStock"
+                 matInput
+                 placeholder="Number In Stock"
+                 type="number"/>
+          <mat-error *ngIf="gameNumberInStock.invalid && gameNumberInStock.errors.min">Number In Stock should be at least {{gameNumberInStock.errors.min.min}}</mat-error>
+          <mat-error *ngIf="gameNumberInStock.invalid && gameNumberInStock.errors.max">Number In Stock should be at most {{gameNumberInStock.errors.max.max}}</mat-error>
+        </mat-form-field>
+
         <div class="container-flex flex-between dynamic-width margin-top">
           <button mat-raised-button color="primary" type="reset" (click)="reset()" class="margin-right">Reset</button>
           <button mat-raised-button color="primary" type="submit" [disabled]="!g.valid" class="margin-left">Save</button>
         </div>
 
         <!--<p>{{g.value | json}}</p>
-    <p>{{game | json}}</p>-->
+        <p>{{game | json}}</p>-->
       </form>
     </ng-template>
   </mat-tab>

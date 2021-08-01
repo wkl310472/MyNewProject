@@ -20,8 +20,7 @@ export class GameInfoComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private gameService: GameService,
-    private photoService: PhotoService,
-    private toastr: ToastrService) {
+    private photoService: PhotoService) {
     this.route.params.subscribe(params => {
       this.game.id = params['id'] ? +params['id'] : NaN;
     });

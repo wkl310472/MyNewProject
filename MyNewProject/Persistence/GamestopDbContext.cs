@@ -24,6 +24,8 @@ namespace MyNewProject.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Game>().Property(g => g.Price).HasDefaultValue(0.0);
+            modelBuilder.Entity<Game>().Property(g => g.NumberInStock).HasDefaultValue(0);
             modelBuilder.Entity<GameGenre>().HasKey(gg => new { gg.GameId, gg.GenreId });
             modelBuilder.Entity<GamePlatform>().HasKey(gp => new { gp.GameId, gp.PlatformId });
 
@@ -33,6 +35,7 @@ namespace MyNewProject.Persistence
             modelBuilder.Entity<User>().Property(u => u.Money).HasDefaultValue(0.0);
             modelBuilder.Entity<User>().Property(u => u.Level).HasDefaultValue(4);
             modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+
         }
     }
 }

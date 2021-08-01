@@ -7,6 +7,7 @@ import { IAppState } from '../../store/app.store';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IGame, selectGame } from '../../store/entities/games.store';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-game-form',
@@ -26,6 +27,30 @@ export class GameFormComponent implements OnInit {
   photos;
 
   previews;
+
+  form = new FormGroup({
+    name: new FormControl('', [
+      Validators.required,
+      Validators.minLength(2),
+      Validators.maxLength(255)
+    ]),
+    developer: new FormControl('', [
+      Validators.required,
+      Validators.minLength(2),
+      Validators.maxLength(255)
+    ]),
+    release: new FormControl('', [
+      Validators.required
+    ]),
+    price: new FormControl('', [
+      Validators.min(0),
+      Validators.max(999.99)
+    ]),
+    numberInStock: new FormControl('', [
+      Validators.min(0),
+      Validators.max(99)
+    ])
+  })
 
   constructor(private route: ActivatedRoute,
     private service: GameService,
@@ -146,6 +171,24 @@ export class GameFormComponent implements OnInit {
         this.previews.push(reader.result as string);
       };
     }
+  }
+
+
+  get gameName() {
+    return this.form.get('name');
+  }
+
+  get gameDeveloper() {
+    return this.form.get('developer');
+  }
+  get gameRelease() {
+    return this.form.get('release');
+  }
+  get gamePrice() {
+    return this.form.get('price');
+  }
+  get gameNumberInStock() {
+    return this.form.get('numberInStock');
   }
 }
 
